@@ -1,0 +1,157 @@
+stages:
+  - test
+  - build
+  - ci
+  - staging
+  - production
+
+variables:
+    APP: hengon-cms-frontend
+    NAMESPACE: hengan-store
+    KUBECONFIG: /etc/deploy/config
+
+test:
+    image: asia.gcr.io/lab22-172806/node-yarn-watchman:1.0.3
+    stage: test
+    script:
+        - node -v
+        - npm -v
+        - yarn install > /dev/null
+        - cp src/js/config.js.sample src/js/config.js
+        - yarn run lint
+
+build_ci:
+    image: asia.gcr.io/lab22-172806/node-yarn-watchman:1.0.3
+    stage: build
+    script:
+        - sysctl -w fs.inotify.max_user_watches=204800
+        - node -v
+        - npm -v
+        - yarn install > /dev/null
+        - cp deployment/ci.config.js src/js/config.js
+        - yarn run relay
+        - yarn run build
+        - mv dist ci
+    artifacts:
+        paths:
+        - ci/
+    except:
+    - master
+
+build_staging:
+    image: asia.gcr.io/lab22-172806/node-yarn-watchman:1.0.3
+    stage: build
+    script:
+        - sysctl -w fs.inotify.max_user_watches=204800
+        - node -v
+        - npm -v
+        - yarn install > /dev/null
+        - cp deployment/staging.config.js src/js/config.js
+        - yarn run relay
+        - yarn run build
+        - mv dist staging
+    artifacts:
+        paths:
+        - staging/
+    only:
+    - master
+
+build_production:
+    image: asia.gcr.io/lab22-172806/node-yarn-watchman:1.0.3
+    stage: build
+    script:
+        - sysctl -w fs.inotify.max_user_watches=204800
+        - node -v
+        - npm -v
+        - yarn install > /dev/null
+        - cp deployment/production.config.js src/js/config.js
+        - yarn run relay
+        - yarn run build
+        - mv dist production
+    artifacts:
+        paths:
+        - production/
+    only:
+    - master
+
+deploy_ci:
+    image: devth/helm:2.6.0
+    stage: ci
+    script:
+        - echo $google_cloud_deploy_key > /google_cloud_deploy_key.json
+        - gcloud auth activate-service-account --key-file=/google_cloud_deploy_key.json
+        - export BUCKET_URL=hengan-store-cms-frontend-${CI_ENVIRONMENT_SLUG}.bucket.lab22.tw
+        - gsutil ls -b gs://$BUCKET_URL || gsutil mb -c regional -l asia-east1 gs://$BUCKET_URL
+        - gsutil rsync -r -d ci gs://$BUCKET_URL
+        - gsutil acl ch -u AllUsers:R -r gs://$BUCKET_URL
+        - gsutil web set -m index.html -e index.html gs://$BUCKET_URL
+    environment:
+        name: ci/$CI_COMMIT_REF_NAME
+        url: http://hengan-store-static-${CI_ENVIRONMENT_SLUG}.bucket.lab22.tw/
+        on_stop: review_stop
+    except:
+    - master
+
+review_stop:
+    image: devth/helm:2.6.0
+    stage: ci
+    script:
+        - echo $google_cloud_deploy_key > /google_cloud_deploy_key.json
+        - gcloud auth activate-service-account --key-file=/google_cloud_deploy_key.json
+        - export BUCKET_URL=hengan-store-cms-frontend-${CI_ENVIRONMENT_SLUG}.bucket.lab22.tw
+        - gsutil -m rm -r gs://$BUCKET_URL
+    environment:
+        name: ci/$CI_COMMIT_REF_NAME
+        action: stop
+    except:
+    - master
+    when: manual
+
+# Staging: Use clone production environment
+staging:
+    image: devth/helm:2.6.0
+    stage: staging
+    script:
+        - echo $google_cloud_deploy_key > /google_cloud_deploy_key.json
+        - gcloud auth activate-service-account --key-file=/google_cloud_deploy_key.json
+        - export BUCKET_URL=static-staging.admin.hengan-store.com
+        - gsutil ls -b gs://$BUCKET_URL || gsutil mb -c regional -l asia-east1 gs://$BUCKET_URL
+        - gsutil rsync -r -d staging gs://$BUCKET_URL
+        - gsutil acl ch -u AllUsers:R -r gs://$BUCKET_URL
+        - gsutil web set -m index.html -e index.html gs://$BUCKET_URL
+        - mkdir -p /etc/deploy
+        - echo ${kube_config} | base64 -d > ${KUBECONFIG}
+        - kubectl config use-context ${kube_context_name}
+        - helm init --client-only
+        - cd deployment/chart
+        - helm upgrade -i ${APP}-staging -f staging-values.yaml --namespace=${NAMESPACE} .
+    only:
+        - master
+    environment:
+      name: staging
+      url: https://staging.admin.hengan-store.com/
+    when: manual
+
+production:
+    image: devth/helm:2.6.0
+    stage: production
+    script:
+        - echo $google_cloud_deploy_key > /google_cloud_deploy_key.json
+        - gcloud auth activate-service-account --key-file=/google_cloud_deploy_key.json
+        - export BUCKET_URL=static.admin.hengan-store.com
+        - gsutil ls -b gs://$BUCKET_URL || gsutil mb -c regional -l asia-east1 gs://$BUCKET_URL
+        - gsutil rsync -r -d production gs://$BUCKET_URL
+        - gsutil acl ch -u AllUsers:R -r gs://$BUCKET_URL
+        - gsutil web set -m index.html -e index.html gs://$BUCKET_URL
+        - mkdir -p /etc/deploy
+        - echo ${kube_config} | base64 -d > ${KUBECONFIG}
+        - kubectl config use-context ${kube_context_name}
+        - helm init --client-only
+        - cd deployment/chart
+        - helm upgrade -i ${APP}-production -f production-values.yaml --namespace=${NAMESPACE} .
+    only:
+        - master
+    environment:
+      name: production
+      url: https://admin.hengan-store.com/
+    when: manual
