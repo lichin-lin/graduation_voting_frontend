@@ -2,6 +2,7 @@ import 'babel-polyfill'
 import { connect } from 'react-redux'
 import Actions from 'js/actions'
 import Containers from 'containers'
+import colors from 'js/style/colors.js'
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router'
 import { withRouter } from 'react-router-dom'
@@ -15,6 +16,8 @@ const StyleRoot = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 20px 0;
+  background: ${colors.bg_blue};
   overflow: hidden;
 `
 

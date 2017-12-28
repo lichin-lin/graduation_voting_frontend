@@ -2,11 +2,13 @@ import 'babel-polyfill'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 // import Containers from 'containers'
-import colors from 'js/style/colors.js'
 import { withRouter } from 'react-router-dom'
 let logoSrc = require('assets/image/logo.png')
+import Swiper from 'react-id-swiper'
 // import { squareBase, breakpoint } from 'js/style/utils.js'
 // import { fontFamily, fontSize } from 'js/style/font.js'
+// import { ChevronLeft, ChevronRight, Pause, Play, PlayCircle } from 'react-feather'
+import { ChevronsLeft, ChevronsRight, Play } from 'react-feather'
 
 const StyleRoot = styled.div`
   width: 100%;
@@ -17,13 +19,10 @@ const StyleRoot = styled.div`
 
   align-items: center;
   justify-content: center;
-
-  background: ${colors.bg_blue};
-  padding-bottom: 50px;
 `
 const LogoWrapper = styled.div`
-  width: calc(30vw * 2.5);
-  height: calc(40vw * 2.5);
+  width: calc(30vw);
+  height: auto;
   > img {
     width: 100%;
     height: auto;
@@ -35,10 +34,115 @@ const BubbleCanvas = styled.canvas`
   position: absolute;
   -webkit-filter: url('#goo');
   filter: url('#goo');
+  z-index: 0;
+`
+const SwiperWrapper = styled.div`
+  z-index: 1;
+  width: 100%;
+  height: 500px;
+  padding: 20px 0;
+  flex: 1;
+  margin-bottom: 50px;
+
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow:visible;
+  }
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    width: 80vw;
+    background: transparent;
+    transition: 0.5s ease;
+    transform: scale(0.5) translateY(-50px);
+    opacity: 0.5;
+  }
+  .swiper-slide-active {
+    opacity: 1;
+    transition: 0.5s ease;
+    transform: scale(0.8) translateY(0px);
+    /* -webkit-box-shadow: 0 10px 6px -6px #000;
+       -moz-box-shadow: 0 10px 6px -6px #000;
+            box-shadow: 0 10px 6px -6px #000; */
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+  }
+`
+const AlbumWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  > img {
+    width: 100%;
+    height: auto;
+  }
+`
+const Cover = styled.div`
+  width: 90%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  > img {
+    width: 100%;
+    height: auto;
+  }
+  &:before {
+    z-index: -1;
+    content: '';
+    top: -50px;
+    left: 120px;
+    width: 475px;
+    height: 475px;
+    position: absolute;
+    background-image: url('http://albums.world/media/vinyl.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+  }
+`
+const ButtonGroup = styled.div`
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`
+const SongButton = styled.div`
+  width: ${props => props.size ? props.size : '50px'};
+  height: ${props => props.size ? props.size : '50px'};
+  > svg {
+    width: 100%;
+    height: auto;
+    stroke: white;
+  }
 `
 @withRouter
 export default class Main extends Component {
   state = {
+  }
+  constructor (props) {
+    super(props)
+    this.goNext = this.goNext.bind(this)
+    this.goPrev = this.goPrev.bind(this)
+    this.swiper = null
   }
   componentDidMount () {
     const canvas = document.getElementById('canvas')
@@ -127,16 +231,70 @@ export default class Main extends Component {
       mouse.y = e.clientY
     }, false)
   }
+
+  goNext = () => {
+    console.log('next')
+    if (this.swiper) this.swiper.slideNext()
+  }
+
+  goPrev = () => {
+    if (this.swiper) this.swiper.slidePrev()
+  }
   render () {
     let match = process.env.NODE_ENV !== 'production' ? '/' : ''
     console.log(match)
+    const params = {
+      slidesPerView: 2,
+      spaceBetween: 10,
+      centeredSlides: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      }
+    }
+
     return (
       <StyleRoot>
         <LogoWrapper>
           <img src={logoSrc} />
         </LogoWrapper>
+
+        <SwiperWrapper>
+          <Swiper
+            {...params}
+            ref={(node) => { this.swiper = node.swiper }}>
+            <AlbumWrapper>
+              <Cover>
+                <img src={require('assets/image/a1.jpg')} />
+              </Cover>
+            </AlbumWrapper>
+            <AlbumWrapper>
+              <Cover>
+                <img src={require('assets/image/a2.jpg')} />
+              </Cover>
+            </AlbumWrapper>
+            <AlbumWrapper>
+              <Cover>
+                <img src={require('assets/image/a4.jpg')} />
+              </Cover>
+            </AlbumWrapper>
+
+            <AlbumWrapper>
+              <Cover>
+                <img src={require('assets/image/a3.jpg')} />
+              </Cover>
+            </AlbumWrapper>
+          </Swiper>
+          <ButtonGroup>
+            <SongButton onClick={this.goPrev}><ChevronsLeft/></SongButton>
+            <SongButton size={'40px'} style={{marginLeft: '5px'}}><Play/></SongButton>
+            <SongButton onClick={this.goNext}><ChevronsRight/></SongButton>
+          </ButtonGroup>
+        </SwiperWrapper>
+
+        {/* bubble */}
         <BubbleCanvas id='canvas'></BubbleCanvas>
-        <svg xmlns='http://www.w3.org/2000/svg' version='1.1'>
+        <svg style={{ width: 0, height: 0 }} xmlns='http://www.w3.org/2000/svg' version='1.1'>
           <defs>
             <filter id='goo'>
               <feGaussianBlur in='SourceGraphic' stdDeviation='10' result='blur' />
@@ -144,7 +302,9 @@ export default class Main extends Component {
             </filter>
           </defs>
         </svg>
+        {/* bubble */}
       </StyleRoot>
     )
   }
 }
+// http://albums.world/media/vinyl.png
