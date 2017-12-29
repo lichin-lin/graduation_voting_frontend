@@ -6510,6 +6510,10 @@ react-relay@^1.1.0:
     prop-types "^15.5.8"
     relay-runtime "1.4.1"
 
+react-render-to-json@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-render-to-json/-/react-render-to-json-0.0.6.tgz#3d04ad156d58d64390089102554b8030f3c2a4fa"
+
 react-router-dom@^4.1.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
@@ -6573,6 +6577,14 @@ react-slick@^0.15.4, react-slick@~0.15.0:
     json2mq "^0.2.0"
     object-assign "^4.1.0"
     slick-carousel "^1.6.0"
+
+react-svg-morph@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-svg-morph/-/react-svg-morph-0.2.1.tgz#fdcb8a53d646cd8166e60b5ceb8f60d585d8c724"
+  dependencies:
+    prop-types "^15.6.0"
+    react-render-to-json "0.0.6"
+    svgpath "^2.1.0"
 
 react-text-truncate@^0.11.2:
   version "0.11.2"
@@ -7783,6 +7795,10 @@ svgo@^0.7.0:
     mkdirp "~0.5.1"
     sax "~1.2.1"
     whet.extend "~0.9.9"
+
+svgpath@^2.1.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/svgpath/-/svgpath-2.2.1.tgz#0834bb67c89a76472b2bd06cc101fa7b517b222c"
 
 swiper@4.0.7:
   version "4.0.7"
