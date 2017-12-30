@@ -3,13 +3,17 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 // import Containers from 'containers'
 import { withRouter } from 'react-router-dom'
-let logoSrc = require('assets/image/logo.png')
 import Swiper from 'react-id-swiper'
 import { breakpoint } from 'js/style/utils.js'
 import { fontSize } from 'js/style/font.js'
-// import { ChevronLeft, ChevronRight, Pause, Play, PlayCircle } from 'react-feather'
 import { ChevronsLeft, ChevronsRight } from 'react-feather'
 import { MorphReplace } from 'react-svg-morph'
+
+let logoSrc = require('assets/image/logo.png')
+let album1 = require('assets/image/a1.jpg')
+let album2 = require('assets/image/a2.jpg')
+let album3 = require('assets/image/a3.jpg')
+let album4 = require('assets/image/a4.jpg')
 
 const StyleRoot = styled.div`
   width: 100%;
@@ -111,17 +115,27 @@ const AlbumWrapper = styled.div`
 const Cover = styled.div`
   width: 90%;
   height: auto;
+  width: 50vw;
+  height: 50vw;
+  background-image: url(${props => props.bgSrc ? props.bgSrc : logoSrc});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+  -webkit-box-shadow: 0px 5px 10px rgba(20, 20, 20, 0.75);
+     -moz-box-shadow: 0px 5px 10px rgba(20, 20, 20, 0.75);
+          box-shadow: 0px 5px 10px rgba(20, 20, 20, 0.75);
   position: relative;
   z-index: 1;
   @media screen and (max-width: ${breakpoint.tablet}) {
-    width: 120%;
+    width: 50vw;
+    height: 50vw;
   }
   > img {
     width: 100%;
     height: auto;
   }
-  &:before {
-    z-index: -1;
+  &:after {
+    z-index: -999999;
     content: '';
     top: -50px;
     left: 120px;
@@ -141,13 +155,28 @@ const Cover = styled.div`
     }
   }
 `
-const CoverTitle = styled.h3`
-  color: white;
-  font-weight: lighter;
-  letter-spacing: 1px;
-  font-size: ${fontSize.h3};
+const CoverTitle = styled.div`
+  margin-bottom: 16px;
+  > * {
+    color: white;
+    letter-spacing: 1px;
+    font-size: ${fontSize.h3};
+  }
+  > h3 {
+    margin: 4px 0;
+  }
+
+  > h4 {
+    opacity: 0.8;
+    margin: 2px 0;
+    font-size: ${fontSize.h4};
+  }
+
   @media screen and (max-width: ${breakpoint.tablet}) {
     font-size: ${fontSize.p1};
+    > h4 {
+      font-size: ${fontSize.p2};
+    }
   }
 `
 const ButtonGroup = styled.div`
@@ -314,6 +343,7 @@ export default class Main extends Component {
       slidesPerView: 2,
       spaceBetween: 10,
       centeredSlides: true,
+      loop: true,
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'
@@ -332,29 +362,41 @@ export default class Main extends Component {
             // eslint-disable-next-line
             ref={node => this.swiper = node !== null ? node.swiper : null }>
             <AlbumWrapper>
-              <Cover>
+              <CoverTitle>
+                <h3>Baby, You're A Rich Man</h3>
+                <h4>The Beatles</h4>
+              </CoverTitle>
+              <Cover bgSrc={album1}>
                 <img src={require('assets/image/a1.jpg')} />
               </Cover>
-              <CoverTitle>The Beatles -<br/> Baby, You're A Rich Man</CoverTitle>
             </AlbumWrapper>
             <AlbumWrapper>
-              <Cover>
+              <CoverTitle>
+                <h3>Sunshine</h3>
+                <h4>Tom Misch</h4>
+              </CoverTitle>
+              <Cover bgSrc={album2}>
                 <img src={require('assets/image/a2.jpg')} />
               </Cover>
-              <CoverTitle>Tom Misch -<br/> Sunshine</CoverTitle>
             </AlbumWrapper>
             <AlbumWrapper>
-              <Cover>
+              <CoverTitle>
+                <h3>Fish</h3>
+                <h4>Crowd Lu</h4>
+              </CoverTitle>
+              <Cover bgSrc={album4}>
                 <img src={require('assets/image/a4.jpg')} />
               </Cover>
-              <CoverTitle>Crowd Lu - Fish</CoverTitle>
             </AlbumWrapper>
 
             <AlbumWrapper>
-              <Cover>
+              <CoverTitle>
+                <h3>South of the River</h3>
+                <h4>Tom Misch</h4>
+              </CoverTitle>
+              <Cover bgSrc={album3}>
                 <img src={require('assets/image/a3.jpg')} />
               </Cover>
-              <CoverTitle>Tom Misch -<br/> South of the River</CoverTitle>
             </AlbumWrapper>
           </Swiper>
           <ButtonGroup>
@@ -368,7 +410,7 @@ export default class Main extends Component {
           </ButtonGroup>
         </SwiperWrapper>
         {/* bubble */}
-        <BubbleCanvas id='canvas'></BubbleCanvas>
+        <BubbleCanvas id='canvas' style={{ display: 'none' }}></BubbleCanvas>
         <svg style={{ width: 0, height: 0 }} xmlns='http://www.w3.org/2000/svg' version='1.1'>
           <defs>
             <filter id='goo'>
