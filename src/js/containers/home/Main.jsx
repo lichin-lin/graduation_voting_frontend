@@ -9,7 +9,11 @@ import { fontSize } from 'js/style/font.js'
 import { ChevronsLeft, ChevronsRight } from 'react-feather'
 import { MorphReplace } from 'react-svg-morph'
 
+// import { Modal } from 'boron/DropModal'
+import Modal from 'react-awesome-modal'
+
 let logoSrc = require('assets/image/logo.png')
+let vinyl = require('assets/image/vinyl.png')
 let album1 = require('assets/image/a1.jpg')
 let album2 = require('assets/image/a2.jpg')
 let album3 = require('assets/image/a3.jpg')
@@ -75,7 +79,7 @@ const SwiperWrapper = styled.div`
     width: 80vw;
     background: transparent;
     transition: 0.5s ease;
-    transform: scale(0.5) translateY(-50px);
+    transform: scale(0.35) translateY(-50px);
     opacity: 0.5;
   }
   .swiper-slide-active {
@@ -137,12 +141,12 @@ const Cover = styled.div`
   &:after {
     z-index: -999999;
     content: '';
-    top: -50px;
-    left: 120px;
-    width: 475px;
-    height: 475px;
+    top: 0;
+    left: 20vw;
+    width: 50vw;
+    height: 50vw;
     position: absolute;
-    background-image: url('http://albums.world/media/vinyl.png');
+    background-image: url(${vinyl});
     background-position: center;
     background-repeat: no-repeat;
     background-size:cover;
@@ -224,7 +228,8 @@ class Pause extends React.Component {
 @withRouter
 export default class Main extends Component {
   state = {
-    stop: false
+    stop: false,
+    visible: false
   }
   constructor (props) {
     super(props)
@@ -320,7 +325,13 @@ export default class Main extends Component {
       mouse.y = e.clientY
     }, false)
   }
+  openModal = () => {
+    this.setState({visible: true})
+  }
 
+  closeModal = () => {
+    this.setState({visible: false})
+  }
   goNext = () => {
     console.log('next')
     if (this.swiper) this.swiper.slideNext()
@@ -361,7 +372,7 @@ export default class Main extends Component {
             {...params}
             // eslint-disable-next-line
             ref={node => this.swiper = node !== null ? node.swiper : null }>
-            <AlbumWrapper>
+            <AlbumWrapper onClick={this.openModal}>
               <CoverTitle>
                 <h3>Baby, You're A Rich Man</h3>
                 <h4>The Beatles</h4>
@@ -409,6 +420,19 @@ export default class Main extends Component {
             <SongButton onClick={this.goNext}><ChevronsRight/></SongButton>
           </ButtonGroup>
         </SwiperWrapper>
+        {/* modal */}
+        <Modal
+          visible={this.state.visible}
+          width="400" height="300"
+          effect="fadeInUp"
+          onClickAway={() => this.closeModal()}>
+            <div>
+                <h1>Title</h1>
+                <p>Some Contents</p>
+                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Close</a>
+            </div>
+        </Modal>
+        {/* modal */}
         {/* bubble */}
         <BubbleCanvas id='canvas' style={{ display: 'none' }}></BubbleCanvas>
         <svg style={{ width: 0, height: 0 }} xmlns='http://www.w3.org/2000/svg' version='1.1'>
