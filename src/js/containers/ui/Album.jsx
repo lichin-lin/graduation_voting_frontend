@@ -4,9 +4,10 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { breakpoint } from 'js/style/utils.js'
 import { fontSize } from 'js/style/font.js'
-let vinyl = require('assets/image/vinyl.png')
+import baffle from 'baffle'
 import ReactModal from 'react-modal'
-
+import ReactRevealText from 'react-reveal-text'
+let vinyl = require('assets/image/vinyl.png')
 ReactModal.setAppElement('#app')
 
 const AlbumWrapper = styled.div`
@@ -97,7 +98,10 @@ const StyledReactModal = styled(ReactModal)`
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+
   .ReactModal__Content {
     top: 0;
     left: 0;
@@ -105,23 +109,44 @@ const StyledReactModal = styled(ReactModal)`
     width: 100vw;
     height: 100vh;
   }
+  h1 {
+    font-size: 36px;
+  }
+  h2 {
+    font-size: 24px;
+  }
 `
 @withRouter
 export default class Album extends Component {
   constructor (props) {
     super(props)
-    this.state = { visible: false }
+    this.state = {
+      revealText: false,
+      visible: false
+    }
   }
-
   show = () => {
     this.setState({ visible: true })
-  }
+    setTimeout(() => {
+      console.log('set')
+      let header = baffle('.baffle', {
+        characters: '░█▒</ ▓>',
+        speed: 65
+      })
+      header.start().reveal(1000).stop()
 
+      let subtitle = baffle('.sub-baffle', {
+        characters: '░█▒</ ▓>',
+        speed: 65
+      })
+      subtitle.start().reveal(2000).stop()
+      this.setState({ revealText: true })
+    }, 2)
+  }
   hide = () => {
     console.log('hide')
     this.setState({ visible: false })
   }
-
   render () {
     return (
       <AlbumWrapper
@@ -142,10 +167,19 @@ export default class Album extends Component {
             content: {color: '#50514F'}
           }}
           // closeTimeoutMS={150}
+          onClick={this.hide}
           isOpen={this.state.visible}
           onRequestClose={this.hide}
           contentLabel="Modal">
-          <h1 onClick={this.hide}>Modal Content</h1>
+          {/* <h1 className="baffle">Happy New Year</h1> */}
+          {/* <h2 className="sub-baffle">Start Working....</h2> */}
+          <div onClick={this.hide}>close</div>
+          <ReactRevealText
+            style={{ color: 'black' }}
+            show={this.state.revealText}
+            delayMin={100}
+            delayMax={1000}
+            transitionTime={250}>WELCOME!</ReactRevealText>
         </StyledReactModal>
 
       </AlbumWrapper>

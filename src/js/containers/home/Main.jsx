@@ -295,16 +295,16 @@ export default class Main extends Component {
             // eslint-disable-next-line
             ref={node => this.swiper = node !== null ? node.swiper : null }>
             <Containers.ui.Album data={{
-              coverSrc: album1
-            }}/>
-            <Containers.ui.Album data={{
-              coverSrc: album2
-            }}/>
-            <Containers.ui.Album data={{
               coverSrc: album4
             }}/>
             <Containers.ui.Album data={{
               coverSrc: album3
+            }}/>
+            <Containers.ui.Album data={{
+              coverSrc: album1
+            }}/>
+            <Containers.ui.Album data={{
+              coverSrc: album2
             }}/>
           </Swiper>
           <ButtonGroup>
