@@ -1,11 +1,11 @@
 import 'babel-polyfill'
 import React, { Component } from 'react'
 import styled from 'styled-components'
-// import Containers from 'containers'
+import Containers from 'containers'
 import { withRouter } from 'react-router-dom'
 import Swiper from 'react-id-swiper'
 import { breakpoint } from 'js/style/utils.js'
-import { fontSize } from 'js/style/font.js'
+// import { fontSize } from 'js/style/font.js'
 import { ChevronsLeft, ChevronsRight } from 'react-feather'
 import { MorphReplace } from 'react-svg-morph'
 
@@ -13,7 +13,6 @@ import { MorphReplace } from 'react-svg-morph'
 import Modal from 'react-awesome-modal'
 
 let logoSrc = require('assets/image/logo.png')
-let vinyl = require('assets/image/vinyl.png')
 let album1 = require('assets/image/a1.jpg')
 let album2 = require('assets/image/a2.jpg')
 let album3 = require('assets/image/a3.jpg')
@@ -104,83 +103,6 @@ const SwiperWrapper = styled.div`
   .swiper-button-next,
   .swiper-button-prev {
     display: none;
-  }
-`
-const AlbumWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  > img {
-    width: 100%;
-    height: auto;
-  }
-`
-const Cover = styled.div`
-  width: 90%;
-  height: auto;
-  width: 50vw;
-  height: 50vw;
-  background-image: url(${props => props.bgSrc ? props.bgSrc : logoSrc});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size:cover;
-  -webkit-box-shadow: 0px 5px 10px rgba(20, 20, 20, 0.75);
-     -moz-box-shadow: 0px 5px 10px rgba(20, 20, 20, 0.75);
-          box-shadow: 0px 5px 10px rgba(20, 20, 20, 0.75);
-  position: relative;
-  z-index: 1;
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    width: 50vw;
-    height: 50vw;
-  }
-  > img {
-    width: 100%;
-    height: auto;
-  }
-  &:after {
-    z-index: -999999;
-    content: '';
-    top: 0;
-    left: 20vw;
-    width: 50vw;
-    height: 50vw;
-    position: absolute;
-    background-image: url(${vinyl});
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size:cover;
-    @media screen and (max-width: ${breakpoint.tablet}) {
-      top: -15vw;
-      left: 15vw;
-      width: 75vw;
-      height: 75vw;
-      display: none;
-    }
-  }
-`
-const CoverTitle = styled.div`
-  margin-bottom: 16px;
-  > * {
-    color: white;
-    letter-spacing: 1px;
-    font-size: ${fontSize.h3};
-  }
-  > h3 {
-    margin: 4px 0;
-  }
-
-  > h4 {
-    opacity: 0.8;
-    margin: 2px 0;
-    font-size: ${fontSize.h4};
-  }
-
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    font-size: ${fontSize.p1};
-    > h4 {
-      font-size: ${fontSize.p2};
-    }
   }
 `
 const ButtonGroup = styled.div`
@@ -372,43 +294,18 @@ export default class Main extends Component {
             {...params}
             // eslint-disable-next-line
             ref={node => this.swiper = node !== null ? node.swiper : null }>
-            <AlbumWrapper onClick={this.openModal}>
-              <CoverTitle>
-                <h3>Baby, You're A Rich Man</h3>
-                <h4>The Beatles</h4>
-              </CoverTitle>
-              <Cover bgSrc={album1}>
-                <img src={require('assets/image/a1.jpg')} />
-              </Cover>
-            </AlbumWrapper>
-            <AlbumWrapper>
-              <CoverTitle>
-                <h3>Sunshine</h3>
-                <h4>Tom Misch</h4>
-              </CoverTitle>
-              <Cover bgSrc={album2}>
-                <img src={require('assets/image/a2.jpg')} />
-              </Cover>
-            </AlbumWrapper>
-            <AlbumWrapper>
-              <CoverTitle>
-                <h3>Fish</h3>
-                <h4>Crowd Lu</h4>
-              </CoverTitle>
-              <Cover bgSrc={album4}>
-                <img src={require('assets/image/a4.jpg')} />
-              </Cover>
-            </AlbumWrapper>
-
-            <AlbumWrapper>
-              <CoverTitle>
-                <h3>South of the River</h3>
-                <h4>Tom Misch</h4>
-              </CoverTitle>
-              <Cover bgSrc={album3}>
-                <img src={require('assets/image/a3.jpg')} />
-              </Cover>
-            </AlbumWrapper>
+            <Containers.ui.Album data={{
+              coverSrc: album1
+            }}/>
+            <Containers.ui.Album data={{
+              coverSrc: album2
+            }}/>
+            <Containers.ui.Album data={{
+              coverSrc: album4
+            }}/>
+            <Containers.ui.Album data={{
+              coverSrc: album3
+            }}/>
           </Swiper>
           <ButtonGroup>
             <SongButton onClick={this.goPrev}><ChevronsLeft/></SongButton>
@@ -448,4 +345,3 @@ export default class Main extends Component {
     )
   }
 }
-// http://albums.world/media/vinyl.png

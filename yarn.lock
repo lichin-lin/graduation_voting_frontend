@@ -2477,6 +2477,10 @@ domhandler@^2.3.0:
   dependencies:
     domelementtype "1"
 
+domkit@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/domkit/-/domkit-0.0.1.tgz#88399d586794efc1154fec6c22cfe50f19bd4dbb"
+
 domutils@1.1:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.1.6.tgz#bddc3de099b9a2efacc51c623f28f416ecc57485"
@@ -6577,7 +6581,7 @@ react-sidebar@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/react-sidebar/-/react-sidebar-2.3.2.tgz#ec140bea8a6f5fa3d8ea7a56479665b44cf4f9cf"
 
-react-slick@^0.15.4, react-slick@~0.15.0:
+react-slick@~0.15.0:
   version "0.15.4"
   resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.15.4.tgz#6709c87b06e7640feeacc06711be42cc2066aabe"
   dependencies:
@@ -6727,6 +6731,12 @@ readline2@^1.0.1:
     code-point-at "^1.0.0"
     is-fullwidth-code-point "^1.0.0"
     mute-stream "0.0.5"
+
+reboron@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/reboron/-/reboron-0.4.5.tgz#bafebd38c7b17b3091ea0ecc16e50ff4ee353fcc"
+  dependencies:
+    domkit "^0.0.1"
 
 rechoir@^0.6.2:
   version "0.6.2"
@@ -7125,6 +7135,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^2.0.0"
     inherits "^2.0.1"
+
+rodal@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/rodal/-/rodal-1.6.3.tgz#27c4810ca2d34fd6aedcbdbf7721a06c78a5b9a8"
 
 run-async@^0.1.0:
   version "0.1.0"
