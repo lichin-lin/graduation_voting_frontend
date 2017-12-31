@@ -55,4 +55,19 @@ injectGlobal`
   p, span {
     font-size: ${fontSize.p1};
   }
+  /* modal */
+  /* .ReactModalPortal > * {
+    opacity: 0;
+  }
+
+  .ReactModalPortal .ReactModal__Overlay {
+    transition: opacity 200ms ease-in-out;
+    background: rgba(0, 0, 0, 0.15);
+    &--after-open {
+      opacity: 1;
+    }
+    &--before-close {
+      opacity: 0;
+    }
+  } */
 `

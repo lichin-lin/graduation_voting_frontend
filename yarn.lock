@@ -2477,10 +2477,6 @@ domhandler@^2.3.0:
   dependencies:
     domelementtype "1"
 
-domkit@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/domkit/-/domkit-0.0.1.tgz#88399d586794efc1154fec6c22cfe50f19bd4dbb"
-
 domutils@1.1:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.1.6.tgz#bddc3de099b9a2efacc51c623f28f416ecc57485"
@@ -2901,7 +2897,7 @@ execa@^0.7.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
-exenv@^1.2.1:
+exenv@^1.2.0, exenv@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
 
@@ -5905,6 +5901,12 @@ radium@^0.18.1:
     inline-style-prefixer "^2.0.5"
     rimraf "^2.6.1"
 
+raf@^3.1.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
+  dependencies:
+    performance-now "^2.1.0"
+
 railroad-diagrams@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/railroad-diagrams/-/railroad-diagrams-1.0.0.tgz#eb7e6267548ddedfb899c1b90e57374559cddb7e"
@@ -6480,6 +6482,22 @@ react-lazy-load@^3.0.10:
     lodash.throttle "^4.0.0"
     prop-types "^15.5.8"
 
+react-modal@^3.1.10:
+  version "3.1.10"
+  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.1.10.tgz#8898b5cc4ebba78adbb8dea4c55a69818aa682cc"
+  dependencies:
+    exenv "^1.2.0"
+    prop-types "^15.5.10"
+    warning "^3.0.0"
+
+react-motion@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/react-motion/-/react-motion-0.5.2.tgz#0dd3a69e411316567927917c6626551ba0607316"
+  dependencies:
+    performance-now "^0.2.0"
+    prop-types "^15.5.8"
+    raf "^3.1.0"
+
 react-paginate@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-5.0.0.tgz#b5c12191ea81adc6d4d1b339b805e81841eaa8ea"
@@ -6731,12 +6749,6 @@ readline2@^1.0.1:
     code-point-at "^1.0.0"
     is-fullwidth-code-point "^1.0.0"
     mute-stream "0.0.5"
-
-reboron@^0.4.5:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/reboron/-/reboron-0.4.5.tgz#bafebd38c7b17b3091ea0ecc16e50ff4ee353fcc"
-  dependencies:
-    domkit "^0.0.1"
 
 rechoir@^0.6.2:
   version "0.6.2"
@@ -7135,10 +7147,6 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^2.0.0"
     inherits "^2.0.1"
-
-rodal@^1.6.3:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/rodal/-/rodal-1.6.3.tgz#27c4810ca2d34fd6aedcbdbf7721a06c78a5b9a8"
 
 run-async@^0.1.0:
   version "0.1.0"

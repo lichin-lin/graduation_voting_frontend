@@ -5,10 +5,9 @@ import { withRouter } from 'react-router-dom'
 import { breakpoint } from 'js/style/utils.js'
 import { fontSize } from 'js/style/font.js'
 let vinyl = require('assets/image/vinyl.png')
-import Rodal from 'rodal'
+import ReactModal from 'react-modal'
 
-// include styles
-import 'rodal/lib/rodal.css'
+ReactModal.setAppElement('#app')
 
 const AlbumWrapper = styled.div`
   display: flex;
@@ -91,7 +90,22 @@ const CoverTitle = styled.div`
     }
   }
 `
-
+const StyledReactModal = styled(ReactModal)`
+  top: 0;
+  left: 0;
+  background: white;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  .ReactModal__Content {
+    top: 0;
+    left: 0;
+    background: white;
+    width: 100vw;
+    height: 100vh;
+  }
+`
 @withRouter
 export default class Album extends Component {
   constructor (props) {
@@ -104,23 +118,36 @@ export default class Album extends Component {
   }
 
   hide = () => {
+    console.log('hide')
     this.setState({ visible: false })
   }
 
   render () {
     return (
-      <AlbumWrapper className="swiper-slide">
+      <AlbumWrapper
+        onClick={() => this.show()}
+        className="swiper-slide">
         <CoverTitle>
           <h3>South of the River</h3>
           <h4>Tom Misch</h4>
         </CoverTitle>
-        <button onClick={() => this.show()}>open</button>
+
         <Cover bgSrc={this.props.data.coverSrc}>
           <img src={this.props.data.coverSrc} />
         </Cover>
-        <Rodal visible={this.state.visible} onClose={this.hide}>
-            <div>Content</div>
-        </Rodal>
+
+        <StyledReactModal
+          style={{
+            overlay: {zIndex: '1', backgroundColor: 'rgba(100, 100, 100, 0.5)'},
+            content: {color: '#50514F'}
+          }}
+          // closeTimeoutMS={150}
+          isOpen={this.state.visible}
+          onRequestClose={this.hide}
+          contentLabel="Modal">
+          <h1 onClick={this.hide}>Modal Content</h1>
+        </StyledReactModal>
+
       </AlbumWrapper>
     )
   }
