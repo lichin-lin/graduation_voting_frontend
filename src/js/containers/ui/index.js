@@ -1,4 +1,5 @@
 import Album from './Album'
+import AlbumDetail from './AlbumDetail'
 import Header from './Header'
 import Footer from './Footer'
 import Modal from './Modal'
@@ -10,6 +11,7 @@ import TitleLabel from './TitleLabel'
 
 export default {
   Album,
+  AlbumDetail,
   Header,
   Modal,
   Footer,

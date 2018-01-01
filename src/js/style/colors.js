@@ -15,10 +15,12 @@ export default {
   ci: '#FCEE21',
   // voting
   bg_blue: '#1D2B6F',
+  // bg_blue: '#161616',
   pink: '#DD6BA5',
   pink_light: '#ff1783',
   green: '#76BE56',
   green_light: '#17c9ff',
   blue: '#73C6C2',
-  blue_light: '#36ff40'
+  blue_light: '#36ff40',
+  ci_yellow: '#D7BD44'
 }

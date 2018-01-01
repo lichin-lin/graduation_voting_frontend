@@ -1,12 +1,14 @@
 import 'babel-polyfill'
 import React, { Component } from 'react'
+import Containers from 'containers'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { breakpoint } from 'js/style/utils.js'
 import { fontSize } from 'js/style/font.js'
 import baffle from 'baffle'
+import colors from 'js/style/colors.js'
 import ReactModal from 'react-modal'
-import ReactRevealText from 'react-reveal-text'
+
 let vinyl = require('assets/image/vinyl.png')
 ReactModal.setAppElement('#app')
 
@@ -91,10 +93,23 @@ const CoverTitle = styled.div`
     }
   }
 `
+const DetailBtn = styled.div`
+  margin: 10px 0;
+  padding: 12px 40px;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 50px;
+  font-size: ${fontSize.p1};
+  line-height: 18px;
+  cursor: pointer;
+`
 const StyledReactModal = styled(ReactModal)`
   top: 0;
   left: 0;
-  background: white;
+  // background: white;
+  // background: ${colors.bg_blue};
+  background: transparent;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -116,14 +131,11 @@ const StyledReactModal = styled(ReactModal)`
     font-size: 24px;
   }
 `
+
 @withRouter
 export default class Album extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      revealText: false,
-      visible: false
-    }
+  state = {
+    visible: false
   }
   show = () => {
     this.setState({ visible: true })
@@ -140,7 +152,6 @@ export default class Album extends Component {
         speed: 65
       })
       subtitle.start().reveal(2000).stop()
-      this.setState({ revealText: true })
     }, 2)
   }
   hide = () => {
@@ -150,12 +161,14 @@ export default class Album extends Component {
   render () {
     return (
       <AlbumWrapper
-        onClick={() => this.show()}
         className="swiper-slide">
+
         <CoverTitle>
           <h3>South of the River</h3>
           <h4>Tom Misch</h4>
         </CoverTitle>
+
+        <DetailBtn onClick={() => this.show()}>查看歌曲</DetailBtn>
 
         <Cover bgSrc={this.props.data.coverSrc}>
           <img src={this.props.data.coverSrc} />
@@ -163,7 +176,7 @@ export default class Album extends Component {
 
         <StyledReactModal
           style={{
-            overlay: {zIndex: '1', backgroundColor: 'rgba(100, 100, 100, 0.5)'},
+            overlay: {zIndex: '1', backgroundColor: 'transparent'},
             content: {color: '#50514F'}
           }}
           // closeTimeoutMS={150}
@@ -173,13 +186,9 @@ export default class Album extends Component {
           contentLabel="Modal">
           {/* <h1 className="baffle">Happy New Year</h1> */}
           {/* <h2 className="sub-baffle">Start Working....</h2> */}
-          <div onClick={this.hide}>close</div>
-          <ReactRevealText
-            style={{ color: 'black' }}
-            show={this.state.revealText}
-            delayMin={100}
-            delayMax={1000}
-            transitionTime={250}>WELCOME!</ReactRevealText>
+          <Containers.ui.AlbumDetail
+            hide={this.hide}
+          />
         </StyledReactModal>
 
       </AlbumWrapper>

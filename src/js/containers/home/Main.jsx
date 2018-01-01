@@ -29,7 +29,7 @@ const StyleRoot = styled.div`
   justify-content: center;
 `
 const LogoWrapper = styled.div`
-  width: calc(30vw);
+  width: calc(20vw);
   height: auto;
   > img {
     width: 100%;
@@ -47,7 +47,7 @@ const BubbleCanvas = styled.canvas`
 const SwiperWrapper = styled.div`
   z-index: 1;
   width: 100%;
-  height: 500px;
+  height: 600px;
   padding: 20px 0;
   flex: 1;
   margin-bottom: 50px;
@@ -331,7 +331,7 @@ export default class Main extends Component {
         </Modal>
         {/* modal */}
         {/* bubble */}
-        <BubbleCanvas id='canvas' style={{ display: 'none' }}></BubbleCanvas>
+        <BubbleCanvas id='canvas' style={{ display: 'block' }}></BubbleCanvas>
         <svg style={{ width: 0, height: 0 }} xmlns='http://www.w3.org/2000/svg' version='1.1'>
           <defs>
             <filter id='goo'>
