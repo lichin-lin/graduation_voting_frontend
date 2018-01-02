@@ -8,7 +8,7 @@ import { breakpoint } from 'js/style/utils.js'
 // import { fontSize } from 'js/style/font.js'
 import { ChevronsLeft, ChevronsRight } from 'react-feather'
 import { MorphReplace } from 'react-svg-morph'
-
+import _ from 'lodash'
 // import { Modal } from 'boron/DropModal'
 import Modal from 'react-awesome-modal'
 
@@ -28,8 +28,27 @@ const StyleRoot = styled.div`
   align-items: center;
   justify-content: center;
 `
+const Header = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content:space-between;
+`
+const Navbar = styled.div`
+  display: flex;
+  > div {
+    margin: 0 10px;
+    color: white;
+    font-weight: normal;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer
+  }
+`
 const LogoWrapper = styled.div`
   width: calc(20vw);
+  width: 100px;
   height: auto;
   > img {
     width: 100%;
@@ -104,6 +123,36 @@ const SwiperWrapper = styled.div`
   .swiper-button-prev {
     display: none;
   }
+
+  .swiper-pagination-bullet {
+    color: white;
+  }
+`
+const Preview = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  div {
+    opacity: 0.35;
+    margin: 0 30px;
+    h4, p {
+      font-size: 10px;
+      margin: 0;
+      color: white;
+      font-weight: normal;
+    }
+    p {
+      margin-bottom: 10px;
+    }
+    &.active {
+      transition: all 0.3s ease;
+      opacity: 1;
+    }
+  }
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    display: none;
+  }
 `
 const ButtonGroup = styled.div`
   margin-top: 10px;
@@ -151,101 +200,98 @@ class Pause extends React.Component {
 export default class Main extends Component {
   state = {
     stop: false,
-    visible: false
+    visible: false,
+    swiper: null,
+    thumbnailSwiper: null,
+    albumIndex: 0
   }
-  constructor (props) {
-    super(props)
-    this.goNext = this.goNext.bind(this)
-    this.goPrev = this.goPrev.bind(this)
-    this.toggleChecked = this.toggleChecked.bind(this)
-    this.swiper = null
-  }
+
   componentDidMount () {
-    const canvas = document.getElementById('canvas')
-    const context = canvas.getContext('2d')
-    const colorPallete = ['#ff1783', '#17c9ff', '#36ff40']
-
-    var width = canvas.width = window.innerWidth
-    var height = canvas.height = window.innerHeight
-    var origin = {x: width / 2, y: height / 2}
-    var mouse = {x: width / 2, y: height / 2}
-    var balls = []
-    var count = 0
-    var randomCount = 1
-
-    window.onresize = () => {
-      width = canvas.width = window.innerWidth
-      height = canvas.height = window.innerHeight
-      origin = {x: width / 2, y: height / 2}
-    }
-
-    class Ball {
-      constructor () {
-        this.x = origin.x
-        this.y = origin.y
-        this.angle = Math.PI * 2 * Math.random()
-        this.vx = (1.3 + Math.random() * 0.3) * Math.cos(this.angle)
-        this.vy = (1.3 + Math.random() * 0.3) * Math.sin(this.angle)
-        this.r = 6 + 3 * Math.random()
-        this.color = colorPallete[Math.floor(Math.random() * colorPallete.length)]
-      }
-
-      update () {
-        this.x += this.vx
-        this.y += this.vy
-        this.r -= 0.01
-      }
-    }
-
-    loop()
-    function loop () {
-      context.clearRect(0, 0, width, height)
-      if (count === randomCount) {
-        balls.push(new Ball())
-        count = 0
-        randomCount = 5 + Math.floor(Math.random() * 5)
-      }
-      count++
-      for (var i = 0; i < balls.length; i++) {
-        var b = balls[i]
-        context.fillStyle = b.color
-        context.beginPath()
-        context.arc(b.x, b.y, b.r, 0, Math.PI * 2, false)
-        context.fill()
-        b.update()
-      }
-
-      origin.x += (mouse.x - origin.x) * 0.15
-      origin.y += (mouse.y - origin.y) * 0.15
-
-      context.fillStyle = '#ffdd02'
-      context.beginPath()
-      context.arc(origin.x, origin.y, 20, 0, Math.PI * 2, false)
-      context.fill()
-
-      removeBall()
-      requestAnimationFrame(loop)
-    }
-
-    function removeBall () {
-      for (var i = 0; i < balls.length; i++) {
-        var b = balls[i]
-        if (
-          b.x + b.r < 0 ||
-          b.x - b.r > width ||
-          b.y + b.r < 0 ||
-          b.y - b.r > height ||
-          b.r <= 0
-        ) {
-          balls.splice(i, 1)
-        }
-      }
-    }
-
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX
-      mouse.y = e.clientY
-    }, false)
+    // const canvas = document.getElementById('canvas')
+    // const context = canvas.getContext('2d')
+    // const colorPallete = ['#ff1783', '#17c9ff', '#36ff40']
+    //
+    // var width = canvas.width = window.innerWidth
+    // var height = canvas.height = window.innerHeight
+    // var origin = {x: width / 2, y: height / 2}
+    // var mouse = {x: width / 2, y: height / 2}
+    // var balls = []
+    // var count = 0
+    // var randomCount = 1
+    //
+    // window.onresize = () => {
+    //   width = canvas.width = window.innerWidth
+    //   height = canvas.height = window.innerHeight
+    //   origin = {x: width / 2, y: height / 2}
+    // }
+    //
+    // class Ball {
+    //   constructor () {
+    //     this.x = origin.x
+    //     this.y = origin.y
+    //     this.angle = Math.PI * 2 * Math.random()
+    //     this.vx = (1.3 + Math.random() * 0.3) * Math.cos(this.angle)
+    //     this.vy = (1.3 + Math.random() * 0.3) * Math.sin(this.angle)
+    //     this.r = 6 + 3 * Math.random()
+    //     this.color = colorPallete[Math.floor(Math.random() * colorPallete.length)]
+    //   }
+    //
+    //   update () {
+    //     this.x += this.vx
+    //     this.y += this.vy
+    //     this.r -= 0.01
+    //   }
+    // }
+    //
+    // loop()
+    // function loop () {
+    //   context.clearRect(0, 0, width, height)
+    //   if (count === randomCount) {
+    //     balls.push(new Ball())
+    //     count = 0
+    //     randomCount = 5 + Math.floor(Math.random() * 5)
+    //   }
+    //   count++
+    //   for (var i = 0; i < balls.length; i++) {
+    //     var b = balls[i]
+    //     context.fillStyle = b.color
+    //     context.beginPath()
+    //     context.arc(b.x, b.y, b.r, 0, Math.PI * 2, false)
+    //     context.fill()
+    //     b.update()
+    //   }
+    //
+    //   origin.x += (mouse.x - origin.x) * 0.15
+    //   origin.y += (mouse.y - origin.y) * 0.15
+    //
+    //   context.fillStyle = '#ffdd02'
+    //   context.beginPath()
+    //   context.arc(origin.x, origin.y, 20, 0, Math.PI * 2, false)
+    //   context.fill()
+    //
+    //   removeBall()
+    //   requestAnimationFrame(loop)
+    // }
+    //
+    // function removeBall () {
+    //   for (var i = 0; i < balls.length; i++) {
+    //     var b = balls[i]
+    //     if (
+    //       b.x + b.r < 0 ||
+    //       b.x - b.r > width ||
+    //       b.y + b.r < 0 ||
+    //       b.y - b.r > height ||
+    //       b.r <= 0
+    //     ) {
+    //       balls.splice(i, 1)
+    //     }
+    //   }
+    // }
+    //
+    // window.addEventListener('mousemove', (e) => {
+    //   mouse.x = e.clientX
+    //   mouse.y = e.clientY
+    // }, false)
   }
   openModal = () => {
     this.setState({visible: true})
@@ -255,18 +301,37 @@ export default class Main extends Component {
     this.setState({visible: false})
   }
   goNext = () => {
-    console.log('next')
     if (this.swiper) this.swiper.slideNext()
   }
 
   goPrev = () => {
     if (this.swiper) this.swiper.slidePrev()
   }
-
+  moveToAlbum = (id) => {
+    this.setState({
+      albumIndex: id
+    })
+    if (this.swiper) this.swiper.slideTo(id)
+  }
   toggleChecked = () => {
     if (this.swiper) {
       // this.swiper.slidePrev()
       this.setState({stop: !this.state.stop})
+    }
+  }
+  albumRef = (ref) => {
+    if (ref) this.setState({ swiper: ref.swiper })
+  }
+  thumbRef = (ref) => {
+    if (ref) this.setState({ thumbnailSwiper: ref.swiper })
+  }
+  componentWillUpdate (nextProps, nextState) {
+    console.log('before change')
+    if (nextState.swiper && nextState.thumbnailSwiper) {
+      console.log('change')
+      const { swiper, thumbnailSwiper } = nextState
+      swiper.controller.control = thumbnailSwiper
+      thumbnailSwiper.controller.control = swiper
     }
   }
   render () {
@@ -285,9 +350,15 @@ export default class Main extends Component {
 
     return (
       <StyleRoot>
-        <LogoWrapper>
-          <img src={logoSrc} />
-        </LogoWrapper>
+        <Header>
+          <LogoWrapper>
+            <img src={logoSrc} />
+          </LogoWrapper>
+          <Navbar>
+            <div>登入</div>
+            <div>關於網站</div>
+          </Navbar>
+        </Header>
 
         <SwiperWrapper>
           <Swiper
@@ -318,6 +389,25 @@ export default class Main extends Component {
           </ButtonGroup>
         </SwiperWrapper>
         {/* modal */}
+        <Preview>
+          {
+            _.map([
+              {
+                title: 'South of the River',
+                author: 'Tom Misch'
+              }, {
+                title: 'xSouth of the Riverx',
+                author: 'xTom Mischx'
+              }
+            ], (el, id) =>
+              <div className={this.state.albumIndex === id ? 'active' : null} onClick={() => this.moveToAlbum(id)}>
+                <p>0{id + 1}</p>
+                <h4>{el.title}</h4>
+                <h4>- {el.author}</h4>
+              </div>
+            )
+          }
+        </Preview>
         <Modal
           visible={this.state.visible}
           width="400" height="300"
