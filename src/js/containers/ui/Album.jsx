@@ -16,7 +16,7 @@ ReactModal.setAppElement('#app')
 const AlbumWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
 
   > img {
     width: 100%;
@@ -24,10 +24,8 @@ const AlbumWrapper = styled.div`
   }
 `
 const Cover = styled.div`
-  width: 90%;
-  height: auto;
-  width: 50vw;
-  height: 50vw;
+  width: 35vw;
+  height: 35vw;
   max-width: 480px;
   max-height: 480px;
   background-image: url(${props => props.bgSrc ? props.bgSrc : ''});
@@ -51,11 +49,11 @@ const Cover = styled.div`
     z-index: -999999;
     content: '';
     top: 0;
-    left: 20vw;
-    width: 50vw;
-    height: 50vw;
-    max-width: 480px;
-    max-height: 480px;
+    left: 12.5vw;
+    width: 35vw;
+    height: 35vw;
+    max-width: 400px;
+    max-height: 400px;
     position: absolute;
     background-image: url(${vinyl});
     background-position: center;
@@ -114,22 +112,22 @@ const StyledReactModal = styled(ReactModal)`
   width: 100vw;
   height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
   .ReactModal__Content {
     top: 0;
     left: 0;
     background: white;
     width: 100vw;
-    height: 100vh;
+    height: fit-content;
   }
   h1 {
     font-size: 36px;
   }
   h2 {
     font-size: 24px;
+  }
+  .ReactModal__Overlay {
+    overflow: scroll;
   }
 `
 
@@ -184,15 +182,15 @@ export default class Album extends Component {
           <h4>Tom Misch</h4>
         </CoverTitle>
 
-        {/* <DetailBtn onClick={() => this.show()}>查看歌曲</DetailBtn> */}
-        <DetailBtn onClick={() => this.vote()}>投票</DetailBtn>
+        <DetailBtn onClick={() => this.show()}>查看歌曲</DetailBtn>
+        {/* <DetailBtn onClick={() => this.vote()}>投票</DetailBtn> */}
         <Cover bgSrc={this.props.data.coverSrc}>
           <img src={this.props.data.coverSrc} />
         </Cover>
 
         <StyledReactModal
           style={{
-            overlay: {zIndex: '1', backgroundColor: 'transparent'},
+            overlay: {zIndex: '1', backgroundColor: 'transparent', overflow: 'scroll'},
             content: {color: '#50514F'}
           }}
           // closeTimeoutMS={150}

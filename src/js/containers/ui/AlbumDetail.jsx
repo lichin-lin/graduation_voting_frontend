@@ -11,17 +11,16 @@ import ReactPlayer from 'react-player'
 const DetailWrapper = styled.div`
   width: 100vw;
   min-height: 100vh;
+  // height: 100vh;
+  height: fit-content;
   opacity: 0;
   border: 5px solid ${colors.bg_blue};
   border-radius: 25%;
   transform: scale(0.5);
   transition: all 0.35s ease;
   background: ${colors.bg_blue};
-  padding: 20px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
 
   &.active {
     border-radius: 0;
@@ -30,27 +29,25 @@ const DetailWrapper = styled.div`
   }
 `
 const Info = styled.div`
-  width: 40vw;
+  width: 60vw;
+  height: fit-content;
   padding: 20px;
-  align-self: flex-end;
-
-  /*  */
-  position: absolute;
-  left: 10%;
-  bottom: 5%;
+  max-width: 1024px;
 `
 const Video = styled.div`
-  // flex: 1;
   width: 60vw;
   height: calc((60vw - 0px) * 9 / 16);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  max-width: 1024px;
+  max-height: calc((1024px - 0px) * 9 / 16);
+
   > * {
     width: 100%;
     flex: 1;
   }
-  align-self: flex-start;
-  margin-top: 80px;
+  margin-top: 40px;
 `
 const CloseBtn = styled.div`
   position: absolute;
@@ -105,7 +102,7 @@ const Subtitle = StyledRevealText.extend`
     line-height: 36px;
   }
   color: ${colors.bg_blue};
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 `
 const Seperator = styled.div`
   width: 40px;
@@ -113,6 +110,16 @@ const Seperator = styled.div`
   background: ${colors.bg_blue};
   margin: 5px 0;
   display: none;
+`
+const Content = styled.div`
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  overflow: scroll;
+  padding: 0 20px 50px 20px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 `
 const Detail = styled.p`
   font-size: 16px;
@@ -133,7 +140,7 @@ const Detail = styled.p`
   }
 `
 const DetailBtn = styled.div`
-  width: 150px;
+  width: 180px;
   margin: 10px 0;
   padding: 10px 30px;
   background: transparent;
@@ -150,7 +157,7 @@ const BackgroundLineGroup = styled.div`
   top: 0;
   left: 0;
   width: calc(100vw - 10px);
-  height: calc(100vh - 10px);
+  height: 100%;
   // background: #CC443D;
   background: #FFB6A5;
   z-index: -1;
@@ -185,32 +192,38 @@ export default class AlbumWrapper extends Component {
           <Line />
           <Line />
         </BackgroundLineGroup>
-        <Info>
-          <Header
-            show={this.state.revealText}
-            text={'South of the River'}
-            delayMin={100}
-            delayMax={1000}
-            transitionTime={150} />
-          <Subtitle
-            show={this.state.revealText}
-            text={'Tom Mischl'}
-            delayMin={100}
-            delayMax={1000}
-            transitionTime={150} />
-          <Seperator />
-          <Detail className={this.state.revealText ? 'active' : null}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </Detail>
-          <DetailBtn onClick={() => this.show()}>Vote 投票</DetailBtn>
-        </Info>
-        <Video>
-          <ReactPlayer
-            // controls={true}
-            width={'100%'}
-            height={'auto'}
-            url='https://youtu.be/nEJk2FJJ18c?t=15s'
-            playing />
-        </Video>
+        <Content>
+          <Video>
+            <ReactPlayer
+              // controls={true}
+              width={'100%'}
+              height={'auto'}
+              url='https://youtu.be/nEJk2FJJ18c?t=15s'
+              playing={false} />
+          </Video>
+          <Info>
+            <Header
+              show={this.state.revealText}
+              text={'South of the River'}
+              delayMin={100}
+              delayMax={1000}
+              transitionTime={150} />
+            <Subtitle
+              show={this.state.revealText}
+              text={'Tom Mischl'}
+              delayMin={100}
+              delayMax={1000}
+              transitionTime={150} />
+            <Seperator />
+            <DetailBtn onClick={() => this.show()}>Vote 投我一票</DetailBtn>
+            <Detail className={this.state.revealText ? 'active' : null}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Detail>
+            <Detail className={this.state.revealText ? 'active' : null}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Detail>
+            <Detail className={this.state.revealText ? 'active' : null}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Detail>
+          </Info>
+        </Content>
 
       </DetailWrapper>
     )

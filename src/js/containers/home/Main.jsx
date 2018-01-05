@@ -27,7 +27,7 @@ const StyleRoot = styled.div`
   flex-direction: column;
 
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 `
 const Header = styled.div`
   width: 100%;
@@ -67,10 +67,9 @@ const BubbleCanvas = styled.canvas`
 const SwiperWrapper = styled.div`
   z-index: 1;
   width: 100%;
-  height: 600px;
+  /* height: 600px; */
+  height: auto;
   padding: 20px 0;
-  flex: 1;
-  margin-bottom: 50px;
 
   .swiper-container {
     width: 100%;
@@ -319,10 +318,18 @@ export default class Main extends Component {
   }
   goNext = () => {
     if (this.swiper) this.swiper.slideNext()
+    console.log((this.state.albumIndex + 1) % 4)
+    this.setState({
+      albumIndex: (this.state.albumIndex + 1) % 4
+    })
   }
 
   goPrev = () => {
     if (this.swiper) this.swiper.slidePrev()
+    console.log((this.state.albumIndex - 1) % 4)
+    this.setState({
+      albumIndex: (this.state.albumIndex - 1) % 4
+    })
   }
   moveToAlbum = (id) => {
     this.setState({
@@ -356,7 +363,7 @@ export default class Main extends Component {
       slidesPerView: 2,
       spaceBetween: 10,
       centeredSlides: true,
-      loop: true,
+      // loop: true,
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'
@@ -380,18 +387,15 @@ export default class Main extends Component {
             {...params}
             // eslint-disable-next-line
             ref={node => this.swiper = node !== null ? node.swiper : null }>
-            <Containers.ui.Album data={{
-              coverSrc: album4
-            }}/>
-            <Containers.ui.Album data={{
-              coverSrc: album3
-            }}/>
-            <Containers.ui.Album data={{
-              coverSrc: album1
-            }}/>
-            <Containers.ui.Album data={{
-              coverSrc: album2
-            }}/>
+            {
+              _.map([album1, album2, album3, album4], (album, id) =>
+                <Containers.ui.Album
+                  key={id}
+                  data={{
+                    coverSrc: album
+                  }}/>
+              )
+            }
           </Swiper>
           <ButtonGroup>
             <SongButton onClick={this.goPrev}><ChevronsLeft/></SongButton>
@@ -408,11 +412,17 @@ export default class Main extends Component {
           {
             _.map([
               {
-                title: 'South of the River',
-                author: 'Tom Misch'
+                title: 'Beatles',
+                author: 'Beatles'
               }, {
-                title: 'xSouth of the Riverx',
-                author: 'xTom Mischx'
+                title: 'sunshine',
+                author: 'Tom Mischx'
+              }, {
+                title: 'South of the Riverx',
+                author: 'Tom Mischx'
+              }, {
+                title: 'Fish',
+                author: 'Crowd'
               }
             ], (el, id) =>
               <div key={id} className={this.state.albumIndex === id ? 'active' : null} onClick={() => this.moveToAlbum(id)}>

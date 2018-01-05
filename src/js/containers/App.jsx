@@ -18,7 +18,8 @@ const StyleRoot = styled.div`
   flex-direction: column;
   padding: 20px 0;
   background: ${colors.bg_blue};
-  overflow: hidden;
+
+  overflow:hidden;
 `
 
 const Section = styled.div`
