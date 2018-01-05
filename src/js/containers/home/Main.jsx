@@ -11,6 +11,7 @@ import { MorphReplace } from 'react-svg-morph'
 import _ from 'lodash'
 // import { Modal } from 'boron/DropModal'
 import Modal from 'react-awesome-modal'
+import store from 'store2'
 
 let logoSrc = require('assets/image/logo.png')
 let album1 = require('assets/image/a1.jpg')
@@ -292,6 +293,9 @@ export default class Main extends Component {
     //   mouse.x = e.clientX
     //   mouse.y = e.clientY
     // }, false)
+    store.set('accessToken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MTUxMjc1NzEsIm5iZiI6MTUxNTEyNzU3MSwianRpIjoiYWE0MWQ0ZjItMTkxOS00NjY5LWJkYjMtOWYyMDBlODEzMzExIiwiZXhwIjoxNTE1MTI4NDcxLCJpZGVudGl0eSI6eyJlbWFpbCI6InZpYzIwMDg3Y2ppbWxpbi5jczAzQG5jdHUuZWR1LnR3IiwidXNlcm5hbWUiOiIwMzE2MDA1In0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.x1CoiqOm2pxWjXSPnpB_DZiNp4SC7we7QDR85ElP-oo')
+    let _token = store.get('accessToken')
+    console.log(_token)
   }
   openModal = () => {
     this.setState({visible: true})
@@ -355,7 +359,7 @@ export default class Main extends Component {
             <img src={logoSrc} />
           </LogoWrapper>
           <Navbar>
-            <div>登入</div>
+            <div><a href="http://127.0.0.1:5000/login">登入</a></div>
             <div>關於網站</div>
           </Navbar>
         </Header>
@@ -400,7 +404,7 @@ export default class Main extends Component {
                 author: 'xTom Mischx'
               }
             ], (el, id) =>
-              <div className={this.state.albumIndex === id ? 'active' : null} onClick={() => this.moveToAlbum(id)}>
+              <div key={id} className={this.state.albumIndex === id ? 'active' : null} onClick={() => this.moveToAlbum(id)}>
                 <p>0{id + 1}</p>
                 <h4>{el.title}</h4>
                 <h4>- {el.author}</h4>

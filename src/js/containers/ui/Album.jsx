@@ -8,6 +8,7 @@ import { fontSize } from 'js/style/font.js'
 import baffle from 'baffle'
 import colors from 'js/style/colors.js'
 import ReactModal from 'react-modal'
+import store from 'store2'
 
 let vinyl = require('assets/image/vinyl.png')
 ReactModal.setAppElement('#app')
@@ -158,18 +159,33 @@ export default class Album extends Component {
     console.log('hide')
     this.setState({ visible: false })
   }
+
+  vote = () => {
+    fetch('http://localhost:5000/vote?songid=1', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + store.get('accessToken')
+      }
+    }).then((response) => {
+      console.log('res', response)
+    }, (error) => {
+      console.log('err', error)
+    })
+  }
   render () {
     return (
       <AlbumWrapper
-        className="swiper-slide">
+        className='swiper-slide'>
 
         <CoverTitle>
           <h3>South of the River</h3>
           <h4>Tom Misch</h4>
         </CoverTitle>
 
-        <DetailBtn onClick={() => this.show()}>查看歌曲</DetailBtn>
-
+        {/* <DetailBtn onClick={() => this.show()}>查看歌曲</DetailBtn> */}
+        <DetailBtn onClick={() => this.vote()}>投票</DetailBtn>
         <Cover bgSrc={this.props.data.coverSrc}>
           <img src={this.props.data.coverSrc} />
         </Cover>
