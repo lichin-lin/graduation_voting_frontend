@@ -293,9 +293,22 @@ export default class Main extends Component {
     //   mouse.x = e.clientX
     //   mouse.y = e.clientY
     // }, false)
-    store.set('accessToken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MTUxMjc1NzEsIm5iZiI6MTUxNTEyNzU3MSwianRpIjoiYWE0MWQ0ZjItMTkxOS00NjY5LWJkYjMtOWYyMDBlODEzMzExIiwiZXhwIjoxNTE1MTI4NDcxLCJpZGVudGl0eSI6eyJlbWFpbCI6InZpYzIwMDg3Y2ppbWxpbi5jczAzQG5jdHUuZWR1LnR3IiwidXNlcm5hbWUiOiIwMzE2MDA1In0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.x1CoiqOm2pxWjXSPnpB_DZiNp4SC7we7QDR85ElP-oo')
-    let _token = store.get('accessToken')
-    console.log(_token)
+    let search = this.props.location.search
+    let params = new URLSearchParams(search)
+    let code = params.get('code')
+    console.log(code)
+    if (_.size(code) > 0) {
+      let url = `http://127.0.0.1:5000/auth?code=${this.props.location.search.slice(6)}`
+      fetch(url)
+        .then(res => res.json())
+        .then(result => {
+          console.log('res', result)
+          store.set('accessToken', result)
+        }, (error) => {
+          console.log('err', error)
+        }
+      )
+    }
   }
   openModal = () => {
     this.setState({visible: true})
@@ -326,17 +339,15 @@ export default class Main extends Component {
   albumRef = (ref) => {
     if (ref) this.setState({ swiper: ref.swiper })
   }
-  thumbRef = (ref) => {
-    if (ref) this.setState({ thumbnailSwiper: ref.swiper })
-  }
-  componentWillUpdate (nextProps, nextState) {
-    console.log('before change')
-    if (nextState.swiper && nextState.thumbnailSwiper) {
-      console.log('change')
-      const { swiper, thumbnailSwiper } = nextState
-      swiper.controller.control = thumbnailSwiper
-      thumbnailSwiper.controller.control = swiper
-    }
+  login = () => {
+    fetch('https://id.nctu.edu.tw/o/authorize/%3Fclient_id%3DdFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb%26scope%3Dprofile%26response_type%3Dcode')
+      .then(res => res.json())
+      .then(result => {
+        console.log('res', result)
+      }, (error) => {
+        console.log('err', error)
+      }
+    )
   }
   render () {
     let match = process.env.NODE_ENV !== 'production' ? '/' : ''
@@ -359,7 +370,7 @@ export default class Main extends Component {
             <img src={logoSrc} />
           </LogoWrapper>
           <Navbar>
-            <div><a href="http://127.0.0.1:5000/login">登入</a></div>
+            <div><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></div>
             <div>關於網站</div>
           </Navbar>
         </Header>

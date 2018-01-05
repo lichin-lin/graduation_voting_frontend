@@ -169,7 +169,7 @@ export default class Album extends Component {
         'Authorization': 'Bearer ' + store.get('accessToken')
       }
     }).then((response) => {
-      console.log('res', response)
+      response.json().then(data => console.log(data))
     }, (error) => {
       console.log('err', error)
     })
