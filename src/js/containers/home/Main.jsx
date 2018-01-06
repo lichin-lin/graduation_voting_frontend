@@ -8,6 +8,7 @@ import colors from 'js/style/colors.js'
 import { breakpoint } from 'js/style/utils.js'
 // import { fontSize } from 'js/style/font.js'
 import { ChevronsLeft, ChevronsRight } from 'react-feather'
+import ReactPlayer from 'react-player'
 import { MorphReplace } from 'react-svg-morph'
 import _ from 'lodash'
 import store from 'store2'
@@ -19,6 +20,8 @@ let album1 = require('assets/image/b1.png')
 let album2 = require('assets/image/b2.jpg')
 let album3 = require('assets/image/b3.jpg')
 let album4 = require('assets/image/b4.jpg')
+let mp3Src = 'http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3'
+
 const albumData = [
   {
     src: album1,
@@ -123,7 +126,7 @@ const Intro = styled.div`
     }
   }
   @media screen and (max-width: ${breakpoint.tablet}) {
-    margin-top: 200px;
+    margin-top: 100px;
     flex-direction: column-reverse;
   }
 `
@@ -320,7 +323,11 @@ export default class Main extends Component {
     visible: false,
     swiper: null,
     thumbnailSwiper: null,
-    albumIndex: 0
+    albumIndex: 0,
+    playing: true,
+    played: 0,
+    duration: 0,
+    seeking: false
   }
 
   componentDidMount () {
@@ -453,10 +460,25 @@ export default class Main extends Component {
   toggleChecked = () => {
     if (this.swiper) {
       // this.swiper.slidePrev()
-      this.setState({stop: !this.state.stop})
+      this.setState({
+        stop: !this.state.stop,
+        playing: !this.state.playing})
     }
   }
-
+  onSeekMouseDown = e => {
+    this.setState({ seeking: true })
+  }
+  onSeekChange = e => {
+    console.log(parseFloat(e.target.value))
+    this.setState({ played: parseFloat(e.target.value) })
+  }
+  onSeekMouseUp = e => {
+    this.setState({ seeking: false })
+    this.player.seekTo(parseFloat(e.target.value))
+  }
+  ref = player => {
+    this.player = player
+  }
   login = () => {
     fetch('https://id.nctu.edu.tw/o/authorize/%3Fclient_id%3DdFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb%26scope%3Dprofile%26response_type%3Dcode')
       .then(res => res.json())
@@ -511,6 +533,27 @@ export default class Main extends Component {
               )
             }
           </Swiper>
+          <div style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <input
+              style={{ width: '300px' }}
+              type='range' min={0} max={1} step='any'
+              value={this.state.played}
+              onMouseDown={this.onSeekMouseDown}
+              onChange={this.onSeekChange}
+              onMouseUp={this.onSeekMouseUp}
+            />
+          </div>
+
+          <ReactPlayer
+            style={{ display: 'none' }}
+            ref={this.ref}
+            url={mp3Src}
+            onProgress={this.onProgress}
+            playing={this.state.playing} />
           <ButtonGroup>
             <SongButton onClick={this.goPrev}><ChevronsLeft/></SongButton>
             <SongButton size={'45px'} style={{marginLeft: '6px'}} onClick={this.toggleChecked}>
@@ -539,9 +582,9 @@ export default class Main extends Component {
           <IntroContent>
             這是交通大學 107 級畢業歌投票網站，由
             <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>交大畢聯會</a></span>
-            所主辦。你可以在聽完這些歌曲後投出你心目中最好的那一首，對了，是要
+            所主辦。你可以在聽完這些歌曲後投出你心目中最好的那一首，對了!是要
             <span><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></span>
-            才能夠投票的噢!如果想要讓周遭朋友知道這個消息，趕快
+            才能夠投票的噢。如果想要讓周遭朋友知道這個消息，趕快
             <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>大力分享</a></span>
             ，讓更多人知道這些很棒的音樂。
             <h4>
