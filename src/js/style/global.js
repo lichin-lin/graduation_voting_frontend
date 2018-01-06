@@ -2,6 +2,8 @@ import { injectGlobal } from 'styled-components'
 import { fontSize } from 'js/style/font.js'
 import FuturaRegular from 'assets/font/FuturaCondensedRegular.ttf'
 import FuturaMedium from 'assets/font/FuturaCondensedMedium.otf'
+import GENJMedium from 'assets/font/genjyuugothic/GenJyuuGothic-Medium.ttf'
+import GENJBold from 'assets/font/genjyuugothic/GenJyuuGothic-Bold.ttf'
 
 injectGlobal`
   html,
@@ -26,6 +28,28 @@ injectGlobal`
     src: url('${FuturaMedium}') format('opentype');
   }
 
+  @font-face {
+    font-family: FuturaMedium;
+    src: url('${FuturaMedium}') format('opentype');
+  }
+  @font-face {
+      font-family: GENJ;
+      font-style: normal;
+      font-weight: normal;
+      src: url('${GENJMedium}') format('opentype');;
+      src: url('${GENJMedium}') format('embedded-opentype'),
+      url('${GENJMedium}') format('truetype'),
+      url('${GENJMedium}') format('woff');
+  }
+  @font-face {
+    font-family: GENJ;
+    font-style: normal;
+    font-weight: bold;
+    src: url('${GENJBold}') format('opentype');;
+    src: url('${GENJBold}') format('embedded-opentype'),
+    url('${GENJBold}') format('truetype'),
+    url('${GENJBold}') format('woff');
+  }
   #app {
     width: 100%;
     height: 100%;

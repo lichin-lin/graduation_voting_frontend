@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { breakpoint } from 'js/style/utils.js'
 import { fontSize } from 'js/style/font.js'
-import baffle from 'baffle'
 import colors from 'js/style/colors.js'
 import ReactModal from 'react-modal'
 import store from 'store2'
@@ -138,20 +137,6 @@ export default class Album extends Component {
   }
   show = () => {
     this.setState({ visible: true })
-    setTimeout(() => {
-      console.log('set')
-      let header = baffle('.baffle', {
-        characters: '░█▒</ ▓>',
-        speed: 65
-      })
-      header.start().reveal(1000).stop()
-
-      let subtitle = baffle('.sub-baffle', {
-        characters: '░█▒</ ▓>',
-        speed: 65
-      })
-      subtitle.start().reveal(2000).stop()
-    }, 2)
   }
   hide = () => {
     console.log('hide')
@@ -173,13 +158,14 @@ export default class Album extends Component {
     })
   }
   render () {
+    console.log(this.props)
     return (
       <AlbumWrapper
         className='swiper-slide'>
 
         <CoverTitle>
-          <h3>South of the River</h3>
-          <h4>Tom Misch</h4>
+          <h3>{this.props.data.title}</h3>
+          <h4>{this.props.data.group}</h4>
         </CoverTitle>
 
         <DetailBtn onClick={() => this.show()}>查看歌曲</DetailBtn>

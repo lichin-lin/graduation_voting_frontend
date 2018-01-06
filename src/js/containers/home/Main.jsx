@@ -4,21 +4,43 @@ import styled from 'styled-components'
 import Containers from 'containers'
 import { withRouter } from 'react-router-dom'
 import Swiper from 'react-id-swiper'
+import colors from 'js/style/colors.js'
 import { breakpoint } from 'js/style/utils.js'
 // import { fontSize } from 'js/style/font.js'
 import { ChevronsLeft, ChevronsRight } from 'react-feather'
 import { MorphReplace } from 'react-svg-morph'
 import _ from 'lodash'
-// import { Modal } from 'boron/DropModal'
-import Modal from 'react-awesome-modal'
 import store from 'store2'
 
 let logoSrc = require('assets/image/logo.png')
-let album1 = require('assets/image/a1.jpg')
-let album2 = require('assets/image/a2.jpg')
-let album3 = require('assets/image/a3.jpg')
-let album4 = require('assets/image/a4.jpg')
-
+let titleSrc = require('assets/image/title.png')
+let peopleSrc = require('assets/image/people.png')
+let album1 = require('assets/image/b1.png')
+let album2 = require('assets/image/b2.jpg')
+let album3 = require('assets/image/b3.jpg')
+let album4 = require('assets/image/b4.jpg')
+const albumData = [
+  {
+    src: album1,
+    title: 'BangRangGa',
+    group: 'Minjae Jung'
+  },
+  {
+    src: album2,
+    title: 'LOS HERALDOS NEGROS',
+    group: 'Mayte Alvarado'
+  },
+  {
+    src: album3,
+    title: 'Forest',
+    group: 'Arun Mehmi'
+  },
+  {
+    src: album4,
+    title: 'Forest',
+    group: 'Arun Mehmi'
+  }
+]
 const StyleRoot = styled.div`
   width: 100%;
   height: auto;
@@ -34,29 +56,123 @@ const Header = styled.div`
   height: auto;
   padding: 0 20px;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
+  align-items:flex-end;
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    justify-content: center;
+  }
 `
 const Navbar = styled.div`
   display: flex;
   > div {
     margin: 0 10px;
-    color: white;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 1px;
     cursor: pointer
   }
-`
-const LogoWrapper = styled.div`
-  width: calc(20vw);
-  width: 100px;
-  height: auto;
-  > img {
-    width: 100%;
-    height: auto;
+  * {
+    color: ${colors.ci_yellow};
+    text-decoration: none;
+    font-family: 'GENJ';
+  }
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    display: none;
   }
 `
+const LogoWrapper = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
+  > img.logo {
+    width: 100px;
+    height: auto;
+  }
+  > img.title {
+    margin-left: 10px;
+    width: 200px;
+    height: auto;
+  }
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    > img.logo {
+      width: 50vw;
+      height: auto;
+    }
+    > img.title {
+      margin: 10px 0 0;
+      width: 80vw;
+    }
+  }
+`
+const Intro = styled.div`
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  margin: 100px 0 0;
+  display: flex;
+  align-items: center;
+  > img {
+    width: 400px;
+    height: auto;
+    @media screen and (max-width: ${breakpoint.tablet}) {
+      width: 80vw;
+    }
+  }
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    margin-top: 200px;
+    flex-direction: column-reverse;
+  }
+`
+const IntroContent = styled.div`
+  flex: 1;
+  padding: 25px;
+  color: white;
+  font-size: 20px;
+  line-height: 40px;
+  font-family: 'GENJ';
+  h4 {
+    font-size: 14px;
+    letter-spacing: 1px;
+    word-spacing: 5px;
+  }
+  span {
+    margin: 0 2px;
+    font-size: 24px;
+    line-height: 30px;
+    color: ${colors.ci_yellow};
+    border-bottom: 2px dashed ${colors.ci_yellow};
+    background-image: linear-gradient(black 33%, rgba(255,255,255,0) 0%);
+    background-position: right;
+    background-size: 1px 3px;
+    background-repeat: repeat-y;
+    &:hover {
+      cursor: pointer;
+      color: ${colors.ci_yellow};
+    }
 
+    > a {
+      text-decoration: none;
+      color: ${colors.ci_yellow};
+    }
+  }
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    font-size: 18px;
+    line-height: 36px;
+    span {
+      font-size: 20px;
+      line-height: 24px;
+    }
+    h4 {
+      font-size: 14px;
+      margin: 5px 0;
+      line-height: 20px;
+    }
+  }
+`
 const BubbleCanvas = styled.canvas`
   top: 0;
   position: absolute;
@@ -129,6 +245,7 @@ const SwiperWrapper = styled.div`
   }
 `
 const Preview = styled.div`
+  z-index: 1;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -309,14 +426,9 @@ export default class Main extends Component {
       )
     }
   }
-  openModal = () => {
-    this.setState({visible: true})
-  }
 
-  closeModal = () => {
-    this.setState({visible: false})
-  }
   goNext = () => {
+    if (this.state.albumIndex === 3) return
     if (this.swiper) this.swiper.slideNext()
     console.log((this.state.albumIndex + 1) % 4)
     this.setState({
@@ -325,6 +437,7 @@ export default class Main extends Component {
   }
 
   goPrev = () => {
+    if (this.state.albumIndex === 0) return
     if (this.swiper) this.swiper.slidePrev()
     console.log((this.state.albumIndex - 1) % 4)
     this.setState({
@@ -343,9 +456,7 @@ export default class Main extends Component {
       this.setState({stop: !this.state.stop})
     }
   }
-  albumRef = (ref) => {
-    if (ref) this.setState({ swiper: ref.swiper })
-  }
+
   login = () => {
     fetch('https://id.nctu.edu.tw/o/authorize/%3Fclient_id%3DdFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb%26scope%3Dprofile%26response_type%3Dcode')
       .then(res => res.json())
@@ -374,11 +485,12 @@ export default class Main extends Component {
       <StyleRoot>
         <Header>
           <LogoWrapper>
-            <img src={logoSrc} />
+            <img className='logo' src={logoSrc} />
+            <img className='title' src={titleSrc} />
           </LogoWrapper>
           <Navbar>
             <div><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></div>
-            <div>關於網站</div>
+            <div><a href="/#about">關於網站</a></div>
           </Navbar>
         </Header>
 
@@ -388,11 +500,13 @@ export default class Main extends Component {
             // eslint-disable-next-line
             ref={node => this.swiper = node !== null ? node.swiper : null }>
             {
-              _.map([album1, album2, album3, album4], (album, id) =>
+              _.map(albumData, (album, id) =>
                 <Containers.ui.Album
                   key={id}
                   data={{
-                    coverSrc: album
+                    coverSrc: album.src,
+                    title: album.title,
+                    group: album.group
                   }}/>
               )
             }
@@ -410,40 +524,31 @@ export default class Main extends Component {
         {/* modal */}
         <Preview>
           {
-            _.map([
-              {
-                title: 'Beatles',
-                author: 'Beatles'
-              }, {
-                title: 'sunshine',
-                author: 'Tom Mischx'
-              }, {
-                title: 'South of the Riverx',
-                author: 'Tom Mischx'
-              }, {
-                title: 'Fish',
-                author: 'Crowd'
-              }
-            ], (el, id) =>
+            _.map(albumData, (el, id) =>
               <div key={id} className={this.state.albumIndex === id ? 'active' : null} onClick={() => this.moveToAlbum(id)}>
                 <p>0{id + 1}</p>
                 <h4>{el.title}</h4>
-                <h4>- {el.author}</h4>
+                <h4>- {el.group}</h4>
               </div>
             )
           }
         </Preview>
-        <Modal
-          visible={this.state.visible}
-          width="400" height="300"
-          effect="fadeInUp"
-          onClickAway={() => this.closeModal()}>
-            <div>
-                <h1>Title</h1>
-                <p>Some Contents</p>
-                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Close</a>
-            </div>
-        </Modal>
+
+        <Intro id="about">
+          <img className='logo' src={peopleSrc} />
+          <IntroContent>
+            這是交通大學 107 級畢業歌投票網站，由
+            <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>交大畢聯會</a></span>
+            所主辦。你可以在聽完這些歌曲後投出你心目中最好的那一首，對了，是要
+            <span><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></span>
+            才能夠投票的噢!如果想要讓周遭朋友知道這個消息，趕快
+            <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>大力分享</a></span>
+            ，讓更多人知道這些很棒的音樂。
+            <h4>
+              * website made with love by lichin, design by Green
+            </h4>
+          </IntroContent>
+        </Intro>
         {/* modal */}
         {/* bubble */}
         <BubbleCanvas id='canvas' style={{ display: 'block' }}></BubbleCanvas>

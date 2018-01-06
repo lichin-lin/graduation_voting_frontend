@@ -2,6 +2,7 @@ import 'babel-polyfill'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
+import { breakpoint } from 'js/style/utils.js'
 // import { fontSize } from 'js/style/font.js'
 import ReactRevealText from 'react-reveal-text'
 import colors from 'js/style/colors.js'
@@ -33,6 +34,9 @@ const Info = styled.div`
   height: fit-content;
   padding: 20px;
   max-width: 1024px;
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    width: 80vw;
+  }
 `
 const Video = styled.div`
   width: 60vw;
@@ -42,7 +46,10 @@ const Video = styled.div`
   justify-content: center;
   max-width: 1024px;
   max-height: calc((1024px - 0px) * 9 / 16);
-
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    width: 80vw;
+    height: calc((80vw - 0px) * 9 / 16);
+  }
   > * {
     width: 100%;
     flex: 1;
@@ -93,6 +100,14 @@ const Header = StyledRevealText.extend`
     line-height: 50px;
   }
   color: ${colors.bg_blue};
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    font-size: 1.75em;
+    line-height: 1em;
+    span {
+      font-size: 1.75em;
+      line-height: 1em;
+    }
+  }
 `
 const Subtitle = StyledRevealText.extend`
   font-size: 36px;
@@ -103,6 +118,14 @@ const Subtitle = StyledRevealText.extend`
   }
   color: ${colors.bg_blue};
   margin-bottom: 20px;
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    font-size: 1.25em;
+    line-height: 1em;
+    span {
+      font-size: 1.25em;
+      line-height: 1em;
+    }
+  }
 `
 const Seperator = styled.div`
   width: 40px;
@@ -158,13 +181,13 @@ const BackgroundLineGroup = styled.div`
   left: 0;
   width: calc(100vw - 10px);
   height: 100%;
-  // background: #CC443D;
-  background: #FFB6A5;
+  background: #FFD8D8;
+  // background: #E0FCFF;
   z-index: -1;
   display: flex;
 `
 const Line = styled.div`
-  border-left: 1px solid rgba(29, 43, 111, 0.5);
+  border-left: 1px solid rgba(29, 43, 111, 0.25);
   flex: 1;
   margin-left: 90px;
 `

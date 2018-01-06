@@ -6,6 +6,7 @@ import colors from 'js/style/colors.js'
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router'
 import { withRouter } from 'react-router-dom'
+import { breakpoint } from 'js/style/utils.js'
 
 import styled from 'styled-components'
 import 'js/style/global.js'
@@ -18,8 +19,11 @@ const StyleRoot = styled.div`
   flex-direction: column;
   padding: 20px 0;
   background: ${colors.bg_blue};
-
+  padding-bottom: 0px;
   overflow:hidden;
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    padding-bottom: 0px;
+  }
 `
 
 const Section = styled.div`
@@ -55,14 +59,13 @@ export default class App extends Component {
   }
   render () {
     // let match = this.props.match.url
-    let match = process.env.NODE_ENV !== 'production' ? this.props.match.url : ''
+    // let match = process.env.NODE_ENV !== 'production' ? this.props.match.url : ''
 
     return (
       <StyleRoot>
         {/* <Containers.ui.Header /> */}
         <Section>
           <Switch>
-            <Route path={`${match}/about`} component={Containers.about.List} />
             <Route path="/" component={Containers.home.Main} />
           </Switch>
         </Section>

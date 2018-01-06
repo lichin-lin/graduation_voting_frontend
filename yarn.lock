@@ -6465,6 +6465,12 @@ react-google-maps@^9.2.2:
     scriptjs "^2.5.8"
     warning "^3.0.0"
 
+react-hold@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-hold/-/react-hold-0.2.1.tgz#23dc180fc7445c8c271d18dd8e3fcfdce1c7c32c"
+  dependencies:
+    hoist-non-react-statics "^1.2.0"
+
 react-hot-loader@^3.0.0-beta.7:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-3.1.1.tgz#e06db8cd0841c41e3ab0b395b2b774126fc8914e"

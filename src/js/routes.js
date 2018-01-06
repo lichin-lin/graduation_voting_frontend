@@ -8,7 +8,7 @@ import Containers from './containers'
 
 export default class Root extends Component {
   render () {
-    let match = process.env.NODE_ENV !== 'production' ? 'graduation_voting_frontend/' : ''
+    let match = process.env.NODE_ENV === 'production' ? 'graduation_voting_frontend/' : ''
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
