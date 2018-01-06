@@ -21,6 +21,7 @@ let album2 = require('assets/image/b2.jpg')
 let album3 = require('assets/image/b3.jpg')
 let album4 = require('assets/image/b4.jpg')
 let mp3Src = 'http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3'
+import 'js/style/musicRange.js'
 
 const albumData = [
   {
@@ -61,8 +62,11 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items:flex-end;
+  z-index: 1;
   @media screen and (max-width: ${breakpoint.tablet}) {
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 `
 const Navbar = styled.div`
@@ -80,7 +84,10 @@ const Navbar = styled.div`
     font-family: 'GENJ';
   }
   @media screen and (max-width: ${breakpoint.tablet}) {
-    display: none;
+    margin-top: 10px;
+    > div {
+      font-size: 16px;
+    }
   }
 `
 const LogoWrapper = styled.div`
@@ -295,6 +302,13 @@ const SongButton = styled.div`
       stroke-width: 1.5;
       stroke: white;
     }
+  }
+`
+const StyledInput = styled.input`
+  width: 200px;
+  background-size: ${(props => props.value ? props.value * 100 + `%` : `0%`)} 100%;
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    width: 70vw;
   }
 `
 class Play extends React.Component {
@@ -538,8 +552,7 @@ export default class Main extends Component {
             display: 'flex',
             justifyContent: 'center'
           }}>
-            <input
-              style={{ width: '300px' }}
+            <StyledInput
               type='range' min={0} max={1} step='any'
               value={this.state.played}
               onMouseDown={this.onSeekMouseDown}
