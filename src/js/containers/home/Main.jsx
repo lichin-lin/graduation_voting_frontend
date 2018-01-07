@@ -12,6 +12,7 @@ import ReactPlayer from 'react-player'
 import { MorphReplace } from 'react-svg-morph'
 import _ from 'lodash'
 import store from 'store2'
+import { serverUrl } from 'js/utils/config'
 
 let logoSrc = require('assets/image/logo.png')
 let titleSrc = require('assets/image/title.png')
@@ -433,9 +434,9 @@ export default class Main extends Component {
     let search = this.props.location.search
     let params = new URLSearchParams(search)
     let code = params.get('code')
-    console.log(code)
+    console.log(code, serverUrl)
     if (_.size(code) > 0) {
-      let url = `http://127.0.0.1:5000/auth?code=${this.props.location.search.slice(6)}`
+      let url = `${serverUrl}/auth?code=${this.props.location.search.slice(6)}`
       fetch(url)
         .then(res => res.json())
         .then(result => {
@@ -540,6 +541,7 @@ export default class Main extends Component {
                 <Containers.ui.Album
                   key={id}
                   data={{
+                    id: id,
                     coverSrc: album.src,
                     title: album.title,
                     group: album.group

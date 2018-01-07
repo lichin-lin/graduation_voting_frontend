@@ -7,7 +7,6 @@ import { breakpoint } from 'js/style/utils.js'
 import { fontSize } from 'js/style/font.js'
 import colors from 'js/style/colors.js'
 import ReactModal from 'react-modal'
-import store from 'store2'
 
 let vinyl = require('assets/image/vinyl.png')
 ReactModal.setAppElement('#app')
@@ -143,20 +142,6 @@ export default class Album extends Component {
     this.setState({ visible: false })
   }
 
-  vote = () => {
-    fetch('http://localhost:5000/vote?songid=1', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + store.get('accessToken')
-      }
-    }).then((response) => {
-      response.json().then(data => console.log(data))
-    }, (error) => {
-      console.log('err', error)
-    })
-  }
   render () {
     console.log(this.props)
     return (
@@ -187,6 +172,7 @@ export default class Album extends Component {
           {/* <h1 className="baffle">Happy New Year</h1> */}
           {/* <h2 className="sub-baffle">Start Working....</h2> */}
           <Containers.ui.AlbumDetail
+            id={this.props.data.id + 1}
             hide={this.hide}
           />
         </StyledReactModal>
