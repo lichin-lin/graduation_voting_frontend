@@ -1,95 +1,93 @@
 import 'babel-polyfill'
-// import Containers from 'containers'
-import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import Actions from 'js/actions'
 import colors from 'js/style/colors.js'
 import styled from 'styled-components'
-import { fontSize } from 'js/style/font.js'
-import { squareBase, breakpoint } from 'js/style/utils.js'
+import { breakpoint } from 'js/style/utils.js'
+let peopleSrc = require('assets/image/people.png')
 
-const FooterWrapper = styled.div`
+const Intro = styled.div`
+  z-index: 1;
   width: 100%;
   height: auto;
-  background: ${colors.footerGray};
-
+  margin: 100px 0 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  padding: 20px 100px;
+  > img {
+    width: 400px;
+    height: auto;
+    @media screen and (max-width: ${breakpoint.tablet}) {
+      width: 80vw;
+    }
+  }
   @media screen and (max-width: ${breakpoint.tablet}) {
-    padding: 10px 20px;
+    margin-top: 100px;
+    flex-direction: column-reverse;
   }
 `
-const Content = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    flex-direction: column;
-    justify-content: flex-start;
+const IntroContent = styled.div`
+  flex: 1;
+  padding: 25px;
+  color: white;
+  font-size: 20px;
+  line-height: 40px;
+  font-family: 'GENJ';
+  h4 {
+    font-size: 14px;
+    letter-spacing: 1px;
+    word-spacing: 5px;
   }
-`
-const Section = styled.div`
-  display: flex;
-  align-items: center;
-  color: ${colors.white};
-  a,
-  p,
   span {
-    font-size: ${fontSize.p2};
-  }
-  span&:nth-child(1) {
-    margin: 0 ${squareBase * 4}px;
-  }
-  span.withPadding {
-    margin: 0 10px;
-  }
-  a {
-    cursor: pointer;
+    margin: 0 2px;
+    font-size: 24px;
+    line-height: 30px;
+    color: ${colors.ci_yellow};
+    border-bottom: 2px dashed ${colors.ci_yellow};
+    background-image: linear-gradient(black 33%, rgba(255,255,255,0) 0%);
+    background-position: right;
+    background-size: 1px 3px;
+    background-repeat: repeat-y;
+    &:hover {
+      cursor: pointer;
+      color: ${colors.ci_yellow};
+    }
+
+    > a {
+      text-decoration: none;
+      color: ${colors.ci_yellow};
+    }
   }
   @media screen and (max-width: ${breakpoint.tablet}) {
-    &:nth-child(1) {
-      margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 36px;
+    span {
+      font-size: 20px;
+      line-height: 24px;
     }
-    div {
-      display: flex;
-      flex-direction: column;
-      span {
-        margin: 2.5px 0;
-      }
+    h4 {
+      font-size: 14px;
+      margin: 5px 0;
+      line-height: 20px;
     }
   }
 `
-const mapStateToProps = (state, ownProps) => ({
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  setLang: (lang) => dispatch(Actions.Utils.setLang(lang))
-})
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class Footer extends Component {
-  setLang = (lang) => {
-    this.props.setLang(lang)
-  }
   render () {
     return (
-      <FooterWrapper>
-        <Content>
-          <Section>
-            <a onClick={() => this.setLang('ch')}>中文</a>
-            <span className="withPadding"> | </span>
-            <a onClick={() => this.setLang('en')}>English</a>
-          </Section>
-          <Section>
-            <div>
-              <span>Copyright © 2017</span><span>國立交通大學人機互動中心 All rights reserved.</span>
-            </div>
-          </Section>
-        </Content>
-      </FooterWrapper>
+      <Intro id="about">
+        <img className='logo' src={peopleSrc} />
+        <IntroContent>
+          這是交通大學 107 級畢業歌投票網站，由
+          <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>交大畢聯會</a></span>
+          所主辦。你可以在聽完這些歌曲後投出你心目中最好的那一首，對了!是要
+          <span><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></span>
+          才能夠投票的噢。如果想要讓周遭朋友知道這個消息，趕快
+          <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>大力分享</a></span>
+          ，讓更多人知道這些很棒的音樂。
+          <h4>
+            * website made with love by lichin, design by Green
+          </h4>
+        </IntroContent>
+      </Intro>
     )
   }
 }

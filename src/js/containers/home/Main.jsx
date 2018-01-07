@@ -4,9 +4,7 @@ import styled from 'styled-components'
 import Containers from 'containers'
 import { withRouter } from 'react-router-dom'
 import Swiper from 'react-id-swiper'
-import colors from 'js/style/colors.js'
 import { breakpoint } from 'js/style/utils.js'
-// import { fontSize } from 'js/style/font.js'
 import { ChevronsLeft, ChevronsRight } from 'react-feather'
 import ReactPlayer from 'react-player'
 import { MorphReplace } from 'react-svg-morph'
@@ -14,9 +12,6 @@ import _ from 'lodash'
 import store from 'store2'
 import { serverUrl } from 'js/utils/ServerConfig'
 
-let logoSrc = require('assets/image/logo.png')
-let titleSrc = require('assets/image/title.png')
-let peopleSrc = require('assets/image/people.png')
 let album1 = require('assets/image/b1.png')
 let album2 = require('assets/image/b2.jpg')
 let album3 = require('assets/image/b3.jpg')
@@ -56,141 +51,7 @@ const StyleRoot = styled.div`
   align-items: center;
   justify-content: flex-start;
 `
-const Header = styled.div`
-  width: 100%;
-  height: auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items:flex-end;
-  z-index: 1;
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-  }
-`
-const Navbar = styled.div`
-  display: flex;
-  > div {
-    margin: 0 10px;
-    font-weight: normal;
-    font-size: 14px;
-    letter-spacing: 1px;
-    cursor: pointer
-  }
-  * {
-    color: ${colors.ci_yellow};
-    text-decoration: none;
-    font-family: 'GENJ';
-  }
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    margin-top: 10px;
-    > div {
-      font-size: 16px;
-    }
-  }
-`
-const LogoWrapper = styled.div`
-  width: auto;
-  height: auto;
-  display: flex;
-  align-items: flex-end;
-  > img.logo {
-    width: 100px;
-    height: auto;
-  }
-  > img.title {
-    margin-left: 10px;
-    width: 200px;
-    height: auto;
-  }
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    > img.logo {
-      width: 50vw;
-      height: auto;
-    }
-    > img.title {
-      margin: 10px 0 0;
-      width: 80vw;
-    }
-  }
-`
-const Intro = styled.div`
-  z-index: 1;
-  width: 100%;
-  height: auto;
-  margin: 100px 0 0;
-  display: flex;
-  align-items: center;
-  > img {
-    width: 400px;
-    height: auto;
-    @media screen and (max-width: ${breakpoint.tablet}) {
-      width: 80vw;
-    }
-  }
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    margin-top: 100px;
-    flex-direction: column-reverse;
-  }
-`
-const IntroContent = styled.div`
-  flex: 1;
-  padding: 25px;
-  color: white;
-  font-size: 20px;
-  line-height: 40px;
-  font-family: 'GENJ';
-  h4 {
-    font-size: 14px;
-    letter-spacing: 1px;
-    word-spacing: 5px;
-  }
-  span {
-    margin: 0 2px;
-    font-size: 24px;
-    line-height: 30px;
-    color: ${colors.ci_yellow};
-    border-bottom: 2px dashed ${colors.ci_yellow};
-    background-image: linear-gradient(black 33%, rgba(255,255,255,0) 0%);
-    background-position: right;
-    background-size: 1px 3px;
-    background-repeat: repeat-y;
-    &:hover {
-      cursor: pointer;
-      color: ${colors.ci_yellow};
-    }
 
-    > a {
-      text-decoration: none;
-      color: ${colors.ci_yellow};
-    }
-  }
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    font-size: 18px;
-    line-height: 36px;
-    span {
-      font-size: 20px;
-      line-height: 24px;
-    }
-    h4 {
-      font-size: 14px;
-      margin: 5px 0;
-      line-height: 20px;
-    }
-  }
-`
-const BubbleCanvas = styled.canvas`
-  top: 0;
-  position: absolute;
-  -webkit-filter: url('#goo');
-  filter: url('#goo');
-  z-index: 0;
-`
 const SwiperWrapper = styled.div`
   z-index: 1;
   width: 100%;
@@ -346,91 +207,6 @@ export default class Main extends Component {
   }
 
   componentDidMount () {
-    // const canvas = document.getElementById('canvas')
-    // const context = canvas.getContext('2d')
-    // const colorPallete = ['#ff1783', '#17c9ff', '#36ff40']
-    //
-    // var width = canvas.width = window.innerWidth
-    // var height = canvas.height = window.innerHeight
-    // var origin = {x: width / 2, y: height / 2}
-    // var mouse = {x: width / 2, y: height / 2}
-    // var balls = []
-    // var count = 0
-    // var randomCount = 1
-    //
-    // window.onresize = () => {
-    //   width = canvas.width = window.innerWidth
-    //   height = canvas.height = window.innerHeight
-    //   origin = {x: width / 2, y: height / 2}
-    // }
-    //
-    // class Ball {
-    //   constructor () {
-    //     this.x = origin.x
-    //     this.y = origin.y
-    //     this.angle = Math.PI * 2 * Math.random()
-    //     this.vx = (1.3 + Math.random() * 0.3) * Math.cos(this.angle)
-    //     this.vy = (1.3 + Math.random() * 0.3) * Math.sin(this.angle)
-    //     this.r = 6 + 3 * Math.random()
-    //     this.color = colorPallete[Math.floor(Math.random() * colorPallete.length)]
-    //   }
-    //
-    //   update () {
-    //     this.x += this.vx
-    //     this.y += this.vy
-    //     this.r -= 0.01
-    //   }
-    // }
-    //
-    // loop()
-    // function loop () {
-    //   context.clearRect(0, 0, width, height)
-    //   if (count === randomCount) {
-    //     balls.push(new Ball())
-    //     count = 0
-    //     randomCount = 5 + Math.floor(Math.random() * 5)
-    //   }
-    //   count++
-    //   for (var i = 0; i < balls.length; i++) {
-    //     var b = balls[i]
-    //     context.fillStyle = b.color
-    //     context.beginPath()
-    //     context.arc(b.x, b.y, b.r, 0, Math.PI * 2, false)
-    //     context.fill()
-    //     b.update()
-    //   }
-    //
-    //   origin.x += (mouse.x - origin.x) * 0.15
-    //   origin.y += (mouse.y - origin.y) * 0.15
-    //
-    //   context.fillStyle = '#ffdd02'
-    //   context.beginPath()
-    //   context.arc(origin.x, origin.y, 20, 0, Math.PI * 2, false)
-    //   context.fill()
-    //
-    //   removeBall()
-    //   requestAnimationFrame(loop)
-    // }
-    //
-    // function removeBall () {
-    //   for (var i = 0; i < balls.length; i++) {
-    //     var b = balls[i]
-    //     if (
-    //       b.x + b.r < 0 ||
-    //       b.x - b.r > width ||
-    //       b.y + b.r < 0 ||
-    //       b.y - b.r > height ||
-    //       b.r <= 0
-    //     ) {
-    //       balls.splice(i, 1)
-    //     }
-    //   }
-    // }
-    //
-    // window.addEventListener('mousemove', (e) => {
-    //   mouse.x = e.clientX
-    //   mouse.y = e.clientY
-    // }, false)
     let search = this.props.location.search
     let params = new URLSearchParams(search)
     let code = params.get('code')
@@ -520,16 +296,8 @@ export default class Main extends Component {
 
     return (
       <StyleRoot>
-        <Header>
-          <LogoWrapper>
-            <img className='logo' src={logoSrc} />
-            <img className='title' src={titleSrc} />
-          </LogoWrapper>
-          <Navbar>
-            <div><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></div>
-            <div><a href="/#about">關於網站</a></div>
-          </Navbar>
-        </Header>
+
+        <Containers.ui.Header />
 
         <SwiperWrapper>
           <Swiper
@@ -592,32 +360,10 @@ export default class Main extends Component {
           }
         </Preview>
 
-        <Intro id="about">
-          <img className='logo' src={peopleSrc} />
-          <IntroContent>
-            這是交通大學 107 級畢業歌投票網站，由
-            <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>交大畢聯會</a></span>
-            所主辦。你可以在聽完這些歌曲後投出你心目中最好的那一首，對了!是要
-            <span><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></span>
-            才能夠投票的噢。如果想要讓周遭朋友知道這個消息，趕快
-            <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>大力分享</a></span>
-            ，讓更多人知道這些很棒的音樂。
-            <h4>
-              * website made with love by lichin, design by Green
-            </h4>
-          </IntroContent>
-        </Intro>
+        <Containers.ui.Footer />
         {/* modal */}
         {/* bubble */}
-        <BubbleCanvas id='canvas' style={{ display: 'block' }}></BubbleCanvas>
-        <svg style={{ width: 0, height: 0 }} xmlns='http://www.w3.org/2000/svg' version='1.1'>
-          <defs>
-            <filter id='goo'>
-              <feGaussianBlur in='SourceGraphic' stdDeviation='10' result='blur' />
-              <feColorMatrix in='blur' mode='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 60 -9'/>
-            </filter>
-          </defs>
-        </svg>
+        <Containers.ui.Bubble />
         {/* bubble */}
       </StyleRoot>
     )
