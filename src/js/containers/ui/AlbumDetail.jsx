@@ -9,7 +9,7 @@ import colors from 'js/style/colors.js'
 import { X } from 'react-feather'
 import ReactPlayer from 'react-player'
 import store from 'store2'
-import { serverUrl } from 'js/utils/config'
+import { serverUrl } from 'js/utils/ServerConfig'
 
 const DetailWrapper = styled.div`
   width: 100vw;

@@ -12,7 +12,7 @@ import ReactPlayer from 'react-player'
 import { MorphReplace } from 'react-svg-morph'
 import _ from 'lodash'
 import store from 'store2'
-import { serverUrl } from 'js/utils/config'
+import { serverUrl } from 'js/utils/ServerConfig'
 
 let logoSrc = require('assets/image/logo.png')
 let titleSrc = require('assets/image/title.png')
