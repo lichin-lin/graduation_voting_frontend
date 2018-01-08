@@ -203,7 +203,8 @@ export default class Main extends Component {
     playing: false,
     played: 0,
     duration: 0,
-    seeking: false
+    seeking: false,
+    profile: ''
   }
 
   componentDidMount () {
@@ -217,14 +218,16 @@ export default class Main extends Component {
         .then(res => res.json())
         .then(result => {
           console.log('res', result)
-          store.set('accessToken', result)
+          store.set('accessToken', result.access_token)
+          this.setState({
+            profile: result.profile
+          })
         }, (error) => {
           console.log('err', error)
         }
       )
     }
   }
-
   goNext = () => {
     if (this.state.albumIndex === 3) return
     if (this.swiper) this.swiper.slideNext()
@@ -233,7 +236,6 @@ export default class Main extends Component {
       albumIndex: (this.state.albumIndex + 1) % 4
     })
   }
-
   goPrev = () => {
     if (this.state.albumIndex === 0) return
     if (this.swiper) this.swiper.slidePrev()
@@ -302,7 +304,7 @@ export default class Main extends Component {
     return (
       <StyleRoot>
 
-        <Containers.ui.Header />
+        <Containers.ui.Header profile={this.state.profile}/>
 
         <SwiperWrapper>
           <Swiper
