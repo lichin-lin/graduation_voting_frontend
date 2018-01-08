@@ -252,7 +252,6 @@ export default class Main extends Component {
     if (this.swiper) {
       // this.swiper.slidePrev()
       this.setState({
-        stop: !this.state.stop,
         playing: !this.state.playing})
     }
   }
@@ -266,6 +265,12 @@ export default class Main extends Component {
   onSeekMouseUp = e => {
     this.setState({ seeking: false })
     this.player.seekTo(parseFloat(e.target.value))
+  }
+  onProgress = state => {
+    // We only want to update time slider if we are not currently seeking
+    if (!this.state.seeking) {
+      this.setState(state)
+    }
   }
   ref = player => {
     this.player = player
@@ -341,7 +346,7 @@ export default class Main extends Component {
             <SongButton onClick={this.goPrev}><ChevronsLeft/></SongButton>
             <SongButton size={'45px'} style={{marginLeft: '6px'}} onClick={this.toggleChecked}>
               <MorphReplace duration={400} width={45} height={45}>
-                {this.state.stop ? <Play key="Play" /> : <Pause key="Pause" />}
+                {this.state.playing ? <Pause key="Pause" /> : <Play key="Play" />}
               </MorphReplace>
             </SongButton>
             <SongButton onClick={this.goNext}><ChevronsRight/></SongButton>
