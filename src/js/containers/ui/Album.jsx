@@ -138,7 +138,6 @@ export default class Album extends Component {
     this.setState({ visible: true })
   }
   hide = () => {
-    console.log('hide')
     this.setState({ visible: false })
   }
 
@@ -154,7 +153,6 @@ export default class Album extends Component {
         </CoverTitle>
 
         <DetailBtn onClick={() => this.show()}>查看歌曲</DetailBtn>
-        {/* <DetailBtn onClick={() => this.vote()}>投票</DetailBtn> */}
         <Cover bgSrc={this.props.data.coverSrc}>
           <img src={this.props.data.coverSrc} />
         </Cover>
@@ -169,8 +167,7 @@ export default class Album extends Component {
           isOpen={this.state.visible}
           onRequestClose={this.hide}
           contentLabel="Modal">
-          {/* <h1 className="baffle">Happy New Year</h1> */}
-          {/* <h2 className="sub-baffle">Start Working....</h2> */}
+
           <Containers.ui.AlbumDetail
             id={this.props.data.id + 1}
             hide={this.hide}

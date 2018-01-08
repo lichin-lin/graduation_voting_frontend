@@ -42,10 +42,6 @@ const IntroContent = styled.div`
     line-height: 30px;
     color: ${colors.ci_yellow};
     border-bottom: 2px dashed ${colors.ci_yellow};
-    background-image: linear-gradient(black 33%, rgba(255,255,255,0) 0%);
-    background-position: right;
-    background-size: 1px 3px;
-    background-repeat: repeat-y;
     &:hover {
       cursor: pointer;
       color: ${colors.ci_yellow};

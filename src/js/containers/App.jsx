@@ -63,13 +63,11 @@ export default class App extends Component {
 
     return (
       <StyleRoot>
-        {/* <Containers.ui.Header /> */}
         <Section>
           <Switch>
             <Route path="/" component={Containers.home.Main} />
           </Switch>
         </Section>
-        {/* <Containers.ui.Footer /> */}
         { process.env.NODE_ENV !== 'production' ? <Containers.DevTools/> : null }
       </StyleRoot>
     )

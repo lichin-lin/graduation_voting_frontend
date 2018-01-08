@@ -200,7 +200,7 @@ export default class Main extends Component {
     swiper: null,
     thumbnailSwiper: null,
     albumIndex: 0,
-    playing: true,
+    playing: false,
     played: 0,
     duration: 0,
     seeking: false
