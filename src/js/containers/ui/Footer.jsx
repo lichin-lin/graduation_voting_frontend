@@ -3,7 +3,9 @@ import React, { Component } from 'react'
 import colors from 'js/style/colors.js'
 import styled from 'styled-components'
 import { breakpoint } from 'js/style/utils.js'
-let peopleSrc = require('assets/image/people.png')
+import Lottie from 'react-lottie'
+// let peopleSrc = require('assets/image/people.png')
+import * as animationData from 'assets/lottie/data.json'
 
 const Intro = styled.div`
   z-index: 1;
@@ -66,18 +68,66 @@ const IntroContent = styled.div`
     }
   }
 `
+const LottieWrapper = styled.div`
+  width: 400px;
+  height: auto;
+  svg {
+    transform: scale(1.65)
+  }
+`
 export default class Footer extends Component {
+  state = {
+    isStopped: false,
+    isPaused: true
+  }
+  LottieStop = () => {
+    this.setState({ isPaused: true })
+  }
+  LottieStart = () => {
+    this.setState({ isPaused: false })
+  }
   render () {
+    const defaultOptions = {
+      loop: true,
+      autoplay: true,
+      animationData: animationData
+      // rendererSettings: {
+      //   preserveAspectRatio: xMidYMid
+      // }
+    }
+
     return (
       <Intro id="about">
-        <img className='logo' src={peopleSrc} />
+        {/* <img className='logo' src={peopleSrc} /> */}
+        <LottieWrapper>
+          <Lottie options={defaultOptions}
+            height={400}
+            width={400}
+            isStopped={this.state.isStopped}
+            isPaused={this.state.isPaused}/>
+        </LottieWrapper>
+
         <IntroContent>
           這是交通大學 107 級畢業歌投票網站，由
-          <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>交大畢聯會</a></span>
+          <span>
+            <a
+              href='https://www.facebook.com/NCTUgraduate/'
+              target='_blank'
+              onMouseLeave={this.LottieStop}
+              onMouseEnter={this.LottieStart}>
+              交大畢聯會
+            </a>
+          </span>
           所主辦。你可以在聽完這些歌曲後投出你心目中最好的那一首，對了!是要
-          <span><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></span>
+          <span><a
+            onMouseLeave={this.LottieStop}
+            onMouseEnter={this.LottieStart}
+            href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></span>
           才能夠投票的噢。如果想要讓周遭朋友知道這個消息，趕快
-          <span><a href='https://www.facebook.com/NCTUgraduate/' target='_blank'>大力分享</a></span>
+          <span><a
+            onMouseLeave={this.LottieStop}
+            onMouseEnter={this.LottieStart}
+            href='https://www.facebook.com/NCTUgraduate/' target='_blank'>大力分享</a></span>
           ，讓更多人知道這些很棒的音樂。
           <h4>
             * website made with love by lichin, design by Green

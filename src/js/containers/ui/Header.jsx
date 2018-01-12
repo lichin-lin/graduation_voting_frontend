@@ -79,8 +79,8 @@ export default class Header extends Component {
         </LogoWrapper>
         <Navbar>
           {
-            this.props.profile.hasOwnProperty('name')
-            ? <div><a href=''>已登入, {this.props.profile.name}</a></div>
+            this.props.profile.hasOwnProperty('username')
+            ? <div><a href=''>已登入, {this.props.profile.username}</a></div>
             : <div><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></div>
           }
           <div><a href="/#about">關於網站</a></div>

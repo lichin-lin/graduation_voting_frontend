@@ -2,14 +2,22 @@ import 'babel-polyfill'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+// let ticking = false
 const BubbleCanvas = styled.canvas`
   top: 0;
   position: absolute;
   -webkit-filter: url('#goo');
   filter: url('#goo');
   z-index: 0;
+  height: ${props => props.height ? '100vh' : '100vh'};
 `
 export default class Bubble extends Component {
+  state = {
+    lastKnownScrollPosition: 0
+  }
+  calcHeight = () => {
+    return document.body.scrollHeight.toString() + 'px'
+  }
   componentDidMount () {
     const canvas = document.getElementById('canvas')
     const context = canvas.getContext('2d')
@@ -92,15 +100,28 @@ export default class Bubble extends Component {
       }
     }
 
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX
-      mouse.y = e.clientY
-    }, false)
+    // window.addEventListener('mousemove', (e) => {
+    //   mouse.x = e.clientX
+    //   mouse.y = e.clientY + 0 // this.state.lastKnownScrollPosition
+    //   console.log(e.clientY, this.state.lastKnownScrollPosition)
+    // }, false)
+    // window.addEventListener('scroll', (e) => {
+    //   // let lastKnownScrollPosition = window.scrollY
+    //   this.setState({
+    //     lastKnownScrollPosition: window.scrollY
+    //   })
+    //   if (!ticking) {
+    //     window.requestAnimationFrame(() => {
+    //       ticking = false
+    //     })
+    //   }
+    //   ticking = true
+    // }, false)
   }
   render () {
     return (
       <div style={{ position: 'absolute', top: '0', left: '0' }}>
-        <BubbleCanvas id='canvas' style={{ display: 'none' }}></BubbleCanvas>
+        <BubbleCanvas id='canvas' style={{ display: 'block' }} height={this.calcHeight}></BubbleCanvas>
         <svg style={{ width: 0, height: 0 }} xmlns='http://www.w3.org/2000/svg' version='1.1'>
           <defs>
             <filter id='goo'>
