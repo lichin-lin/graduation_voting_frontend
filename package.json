@@ -59,6 +59,7 @@
     "store2": "^2.5.9",
     "styled-components": "^2.1.1",
     "styled-normalize": "^2.2.1",
+    "sweetalert2": "^7.3.5",
     "url": "^0.11.0",
     "url-join": "^1.1.0",
     "url-loader": "^0.5.7",

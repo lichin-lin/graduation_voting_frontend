@@ -7909,6 +7909,10 @@ svgpath@^2.1.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/svgpath/-/svgpath-2.2.1.tgz#0834bb67c89a76472b2bd06cc101fa7b517b222c"
 
+sweetalert2@^7.3.5:
+  version "7.3.5"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-7.3.5.tgz#fc900404660aa107dccd0ca4c9c8e918187ec5aa"
+
 swiper@4.0.7:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/swiper/-/swiper-4.0.7.tgz#89175c2a23d86622eda8344740c24a3701a6b270"

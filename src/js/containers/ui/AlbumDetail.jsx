@@ -8,8 +8,6 @@ import ReactRevealText from 'react-reveal-text'
 import colors from 'js/style/colors.js'
 import { X } from 'react-feather'
 import ReactPlayer from 'react-player'
-import store from 'store2'
-import { serverUrl } from 'js/utils/ServerConfig'
 
 const DetailWrapper = styled.div`
   width: 100vw;
@@ -164,19 +162,6 @@ const Detail = styled.p`
     opacity: 1;
   }
 `
-const DetailBtn = styled.div`
-  width: 180px;
-  margin: 10px 0;
-  padding: 10px 30px;
-  background: transparent;
-  color: ${colors.bg_blue};
-  border: 2px solid ${colors.bg_blue};
-  border-radius: 50px;
-  text-align: center;
-  font-size: 16px;
-  line-height: 18px;
-  cursor: pointer;
-`
 const BackgroundLineGroup = styled.div`
   position:fixed;
   top: 0;
@@ -205,20 +190,6 @@ export default class AlbumWrapper extends Component {
   }
   hide = () => {
     this.props.hide()
-  }
-  vote = () => {
-    fetch(`${serverUrl}/vote?songid=${this.props.id}`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + store.get('accessToken')
-      }
-    }).then((response) => {
-      response.json().then(data => console.log(data))
-    }, (error) => {
-      console.log('err', error)
-    })
   }
   render () {
     return (
@@ -254,7 +225,6 @@ export default class AlbumWrapper extends Component {
               delayMax={1000}
               transitionTime={150} />
             <Seperator />
-            <DetailBtn onClick={() => this.vote()}>Vote 投我一票</DetailBtn>
             <Detail className={this.state.revealText ? 'active' : null}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Detail>
             <Detail className={this.state.revealText ? 'active' : null}>

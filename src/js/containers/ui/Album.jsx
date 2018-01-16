@@ -7,6 +7,9 @@ import { breakpoint } from 'js/style/utils.js'
 import { fontSize } from 'js/style/font.js'
 import colors from 'js/style/colors.js'
 import ReactModal from 'react-modal'
+import store from 'store2'
+import { serverUrl } from 'js/utils/ServerConfig'
+import swal from 'sweetalert2'
 
 let vinyl = require('assets/image/vinyl.png')
 ReactModal.setAppElement('#app')
@@ -100,6 +103,8 @@ const DetailBtn = styled.div`
   font-size: ${fontSize.p1};
   line-height: 18px;
   cursor: pointer;
+
+  margin: 0 5px;
 `
 const StyledReactModal = styled(ReactModal)`
   top: 0;
@@ -128,11 +133,23 @@ const StyledReactModal = styled(ReactModal)`
     overflow: scroll;
   }
 `
+const BtnGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 
+  @media screen and (max-width: ${breakpoint.tablet}) {
+    flex-direction: column;
+    > div {
+      margin-bottom: 5px;
+    }
+  }
+`
 @withRouter
 export default class Album extends Component {
   state = {
-    visible: false
+    visible: false,
+    errorShow: false
   }
   show = () => {
     this.setState({ visible: true })
@@ -140,7 +157,46 @@ export default class Album extends Component {
   hide = () => {
     this.setState({ visible: false })
   }
-
+  vote = (id) => {
+    fetch(`${serverUrl}/vote?songid=${id}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + store.get('accessToken')
+      }
+    }).then((response) => {
+      response.json().then(data => {
+        if (data === 'already vote!') {
+          swal({
+            title: '您已經投過了',
+            text: '謝謝你不過你已經投完票了',
+            type: 'warning'
+          })
+        } else {
+          swal({
+            title: '謝謝你的支持',
+            text: '你成功投下你寶貴的一票了!',
+            type: 'success'
+          })
+        }
+      })
+    }, (error) => {
+      swal({
+        title: '有東西似乎出了一點問題...',
+        text: '你是不是還沒登入呢?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '我要登入',
+        cancelButtonText: '關閉'
+      }).then((result) => {
+        if (result.value) {
+          window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
+        }
+      })
+      console.log('err', error)
+    })
+  }
   render () {
     console.log(this.props)
     return (
@@ -152,7 +208,11 @@ export default class Album extends Component {
           <h4>{this.props.data.group}</h4>
         </CoverTitle>
 
-        <DetailBtn onClick={() => this.show()}>查看歌曲</DetailBtn>
+        <BtnGroup>
+          <DetailBtn onClick={() => this.show()}>查看歌曲</DetailBtn>
+          <DetailBtn onClick={() => this.vote(this.props.data.id + 1)}>投這首歌</DetailBtn>
+        </BtnGroup>
+
         <Cover bgSrc={this.props.data.coverSrc}>
           <img src={this.props.data.coverSrc} />
         </Cover>
