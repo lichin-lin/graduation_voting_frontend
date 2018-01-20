@@ -100,11 +100,10 @@ export default class Bubble extends Component {
       }
     }
 
-    // window.addEventListener('mousemove', (e) => {
-    //   mouse.x = e.clientX
-    //   mouse.y = e.clientY + 0 // this.state.lastKnownScrollPosition
-    //   console.log(e.clientY, this.state.lastKnownScrollPosition)
-    // }, false)
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX
+      mouse.y = e.clientY + 0 // this.state.lastKnownScrollPosition
+    }, false)
     // window.addEventListener('scroll', (e) => {
     //   // let lastKnownScrollPosition = window.scrollY
     //   this.setState({
@@ -121,7 +120,7 @@ export default class Bubble extends Component {
   render () {
     return (
       <div style={{ position: 'absolute', top: '0', left: '0' }}>
-        <BubbleCanvas id='canvas' style={{ display: 'none' }} height={this.calcHeight}></BubbleCanvas>
+        <BubbleCanvas id='canvas' style={{ display: 'block' }} height={'100%'/* this.calcHeight */}></BubbleCanvas>
         <svg style={{ width: 0, height: 0 }} xmlns='http://www.w3.org/2000/svg' version='1.1'>
           <defs>
             <filter id='goo'>

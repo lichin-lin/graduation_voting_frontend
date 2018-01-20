@@ -79,6 +79,12 @@ injectGlobal`
   p, span {
     font-size: ${fontSize.p1};
   }
+
+  canvas.sketch {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
   /* modal */
   /* .ReactModalPortal > * {
     opacity: 0;

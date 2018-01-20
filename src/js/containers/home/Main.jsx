@@ -377,7 +377,7 @@ export default class Main extends Component {
         <Containers.ui.Footer />
         {/* modal */}
         {/* bubble */}
-        <Containers.ui.Bubble />
+        <Containers.ui.Bubble/>
         {/* bubble */}
       </StyleRoot>
     )
