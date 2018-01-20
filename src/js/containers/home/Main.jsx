@@ -212,13 +212,16 @@ export default class Main extends Component {
     let params = new URLSearchParams(search)
     let code = params.get('code')
     console.log(code, serverUrl)
+
     if (_.size(code) > 0) {
+      // if get code
       let url = `${serverUrl}/auth?code=${this.props.location.search.slice(6)}`
       fetch(url)
         .then(res => res.json())
         .then(result => {
           console.log('res', result)
           store.set('accessToken', result.access_token)
+          store.set('profile', result.profile)
           this.setState({
             profile: result.profile
           })
@@ -226,12 +229,18 @@ export default class Main extends Component {
           console.log('err', error)
         }
       )
+    } else {
+      // check prev accessToken & token
+      let _profile = store.get('profile')
+      this.setState({
+        profile: _profile !== null ? _profile : ''
+      })
     }
   }
   goNext = () => {
     if (this.state.albumIndex === 3) return
     if (this.swiper) this.swiper.slideNext()
-    console.log((this.state.albumIndex + 1) % 4)
+    // console.log((this.state.albumIndex + 1) % 4)
     this.setState({
       albumIndex: (this.state.albumIndex + 1) % 4
     })
@@ -239,7 +248,7 @@ export default class Main extends Component {
   goPrev = () => {
     if (this.state.albumIndex === 0) return
     if (this.swiper) this.swiper.slidePrev()
-    console.log((this.state.albumIndex - 1) % 4)
+    // console.log((this.state.albumIndex - 1) % 4)
     this.setState({
       albumIndex: (this.state.albumIndex - 1) % 4
     })
@@ -288,8 +297,6 @@ export default class Main extends Component {
     )
   }
   render () {
-    let match = process.env.NODE_ENV !== 'production' ? '/' : ''
-    console.log(match)
     const params = {
       slidesPerView: 2,
       spaceBetween: 10,

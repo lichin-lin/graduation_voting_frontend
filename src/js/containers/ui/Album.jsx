@@ -198,7 +198,6 @@ export default class Album extends Component {
     })
   }
   render () {
-    console.log(this.props)
     return (
       <AlbumWrapper
         className='swiper-slide'>
