@@ -5,7 +5,7 @@ import styled from 'styled-components'
 // let ticking = false
 const BubbleCanvas = styled.canvas`
   top: 0;
-  position: absolute;
+  position: fixed;
   -webkit-filter: url('#goo');
   filter: url('#goo');
   z-index: 0;
