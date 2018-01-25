@@ -167,7 +167,7 @@ export default class Album extends Component {
       }
     }).then((response) => {
       response.json().then(data => {
-        if (data === 'Not enough segments') {
+        if (data === 'Not enough segments' || data === 'Missing Authorization Header') {
           swal({
             title: '有東西似乎出了一點問題...',
             text: '你是不是還沒登入呢?',
