@@ -64,7 +64,8 @@
     "url-join": "^1.1.0",
     "url-loader": "^0.5.7",
     "webpack": "^3.4.0",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^2.7.1",
+    "webpack-jarvis": "^0.2.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",

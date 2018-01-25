@@ -167,7 +167,16 @@ export default class Album extends Component {
       }
     }).then((response) => {
       response.json().then(data => {
-        if (data === 'already vote!') {
+        if (data === 'Not enough segments') {
+          swal({
+            title: '有東西似乎出了一點問題...',
+            text: '你是不是還沒登入呢?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '我要登入',
+            cancelButtonText: '關閉'
+          })
+        } else if (data === 'already vote!') {
           swal({
             title: '您已經投過了',
             text: '謝謝你不過你已經投完票了',

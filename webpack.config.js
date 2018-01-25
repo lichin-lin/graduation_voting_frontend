@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+const Jarvis = require('webpack-jarvis')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -82,6 +83,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.ejs',
       inject: true
+    }),
+    new Jarvis({
+      port: 1337 // optional: set a port
     })
   ]
 }
