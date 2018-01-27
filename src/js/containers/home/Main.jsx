@@ -16,7 +16,10 @@ let album1 = require('assets/image/b1.png')
 let album2 = require('assets/image/b2.jpg')
 let album3 = require('assets/image/b3.jpg')
 let album4 = require('assets/image/b4.jpg')
-let mp3Src = 'http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3'
+
+let mp3Src1 = 'https://soundcloud.com/tycho/tycho-awake'
+let mp3Src2 = 'https://soundcloud.com/miami-nights-1984/accelerated'
+
 import 'js/style/musicRange.js'
 
 const albumData = [
@@ -200,6 +203,7 @@ export default class Main extends Component {
     swiper: null,
     thumbnailSwiper: null,
     albumIndex: 0,
+    url: mp3Src1,
     playing: false,
     played: 0,
     duration: 0,
@@ -238,6 +242,7 @@ export default class Main extends Component {
     }
   }
   goNext = () => {
+    this.load(mp3Src2)
     if (this.state.albumIndex === 3) return
     if (this.swiper) this.swiper.slideNext()
     // console.log((this.state.albumIndex + 1) % 4)
@@ -246,6 +251,7 @@ export default class Main extends Component {
     })
   }
   goPrev = () => {
+    this.load(mp3Src2)
     if (this.state.albumIndex === 0) return
     if (this.swiper) this.swiper.slidePrev()
     // console.log((this.state.albumIndex - 1) % 4)
@@ -282,6 +288,13 @@ export default class Main extends Component {
     if (!this.state.seeking) {
       this.setState(state)
     }
+  }
+  load = url => {
+    this.setState({
+      url,
+      played: 0,
+      loaded: 0
+    })
   }
   ref = player => {
     this.player = player
@@ -348,7 +361,7 @@ export default class Main extends Component {
           <ReactPlayer
             style={{ display: 'none' }}
             ref={this.ref}
-            url={mp3Src}
+            url={this.state.url}
             onProgress={this.onProgress}
             playing={this.state.playing} />
           <ButtonGroup>
