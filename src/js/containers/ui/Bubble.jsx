@@ -120,7 +120,7 @@ export default class Bubble extends Component {
   render () {
     return (
       <div style={{ position: 'absolute', top: '0', left: '0' }}>
-        <BubbleCanvas id='canvas' style={{ display: 'block' }} height={'100%'/* this.calcHeight */}></BubbleCanvas>
+        <BubbleCanvas id='canvas' style={{ display: 'none' }} height={'100%'/* this.calcHeight */}></BubbleCanvas>
         <svg style={{ width: 0, height: 0 }} xmlns='http://www.w3.org/2000/svg' version='1.1'>
           <defs>
             <filter id='goo'>

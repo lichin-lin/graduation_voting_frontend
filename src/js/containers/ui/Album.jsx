@@ -145,6 +145,13 @@ const BtnGroup = styled.div`
     }
   }
 `
+function handleErrors (response) {
+  if (!response.ok) {
+    throw Error(response.statusText)
+  }
+  return response
+}
+
 @withRouter
 export default class Album extends Component {
   state = {
@@ -165,7 +172,9 @@ export default class Album extends Component {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + store.get('accessToken')
       }
-    }).then((response) => {
+    })
+    .then(handleErrors)
+    .then((response) => {
       response.json().then(data => {
         if (data === 'Not enough segments' || data === 'Missing Authorization Header') {
           swal({
@@ -191,6 +200,21 @@ export default class Album extends Component {
         }
       })
     }, (error) => {
+      swal({
+        title: '有東西似乎出了一點問題...',
+        text: '你是不是還沒登入呢?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '我要登入',
+        cancelButtonText: '關閉'
+      }).then((result) => {
+        if (result.value) {
+          window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
+        }
+      })
+      console.log('err', error)
+    })
+    .catch(error => {
       swal({
         title: '有東西似乎出了一點問題...',
         text: '你是不是還沒登入呢?',
@@ -234,7 +258,7 @@ export default class Album extends Component {
           onClick={this.hide}
           isOpen={this.state.visible}
           onRequestClose={this.hide}
-          contentLabel="Modal">
+          contentLabel='Modal'>
 
           <Containers.ui.AlbumDetail
             id={this.props.data.id + 1}
