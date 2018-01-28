@@ -119,33 +119,7 @@ const SwiperWrapper = styled.div`
     color: white;
   }
 `
-const Preview = styled.div`
-  z-index: 1;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  div {
-    opacity: 0.35;
-    margin: 0 30px;
-    h4, p {
-      font-size: 10px;
-      margin: 0;
-      color: white;
-      font-weight: normal;
-    }
-    p {
-      margin-bottom: 10px;
-    }
-    &.active {
-      transition: all 0.3s ease;
-      opacity: 1;
-    }
-  }
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    display: none;
-  }
-`
+
 const ButtonGroup = styled.div`
   margin-top: 10px;
   display: flex;
@@ -374,19 +348,12 @@ export default class Main extends Component {
             <SongButton onClick={this.goNext}><ChevronsRight/></SongButton>
           </ButtonGroup>
         </SwiperWrapper>
-        {/* modal */}
-        <Preview>
-          {
-            _.map(albumData, (el, id) =>
-              <div key={id} className={this.state.albumIndex === id ? 'active' : null} onClick={() => this.moveToAlbum(id)}>
-                <p>0{id + 1}</p>
-                <h4>{el.title}</h4>
-                <h4>- {el.group}</h4>
-              </div>
-            )
-          }
-        </Preview>
 
+        <Containers.ui.AlbumPreviewList
+          albumIndex={this.state.albumIndex}
+          moveToAlbum={this.moveToAlbum}
+          swiper={this.swiper}
+        />
         <Containers.ui.Footer />
         {/* modal */}
         {/* bubble */}
