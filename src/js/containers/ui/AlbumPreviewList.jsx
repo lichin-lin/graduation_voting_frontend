@@ -54,12 +54,8 @@ const Preview = styled.div`
 
 @withRouter
 export default class AlbumPreviewList extends Component {
-  state = {
-  }
   moveToAlbum = (id) => {
-    this.setState({
-      albumIndex: id
-    })
+    this.props.setAlbumIndex(id)
     if (this.props.swiper) this.props.swiper.slideTo(id)
   }
 
@@ -71,7 +67,7 @@ export default class AlbumPreviewList extends Component {
             <div
               key={id}
               className={this.props.albumIndex === id ? 'active' : null}
-              onClick={() => this.props.moveToAlbum(id)}>
+              onClick={() => this.moveToAlbum(id)}>
               <p>0{id + 1}</p>
               <h4>{el.title}</h4>
               <h4>- {el.group}</h4>

@@ -5,9 +5,6 @@ import Containers from 'containers'
 import { withRouter } from 'react-router-dom'
 import Swiper from 'react-id-swiper'
 import { breakpoint } from 'js/style/utils.js'
-import { ChevronsLeft, ChevronsRight } from 'react-feather'
-import ReactPlayer from 'react-player'
-import { MorphReplace } from 'react-svg-morph'
 import _ from 'lodash'
 import store from 'store2'
 import { serverUrl } from 'js/utils/ServerConfig'
@@ -16,9 +13,6 @@ let album1 = require('assets/image/b1.png')
 let album2 = require('assets/image/b2.jpg')
 let album3 = require('assets/image/b3.jpg')
 let album4 = require('assets/image/b4.jpg')
-
-let mp3Src1 = 'https://soundcloud.com/tycho/tycho-awake'
-let mp3Src2 = 'https://soundcloud.com/miami-nights-1984/accelerated'
 
 import 'js/style/musicRange.js'
 
@@ -120,68 +114,12 @@ const SwiperWrapper = styled.div`
   }
 `
 
-const ButtonGroup = styled.div`
-  margin-top: 10px;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-`
-const SongButton = styled.div`
-  cursor: pointer;
-  width: ${props => props.size ? props.size : '50px'};
-  height: ${props => props.size ? props.size : '50px'};
-  > svg {
-    width: 100%;
-    height: auto;
-    stroke: white;
-    > * {
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 1.5;
-      stroke: white;
-    }
-  }
-`
-const StyledInput = styled.input`
-  width: 200px;
-  background-size: ${(props => props.value ? props.value * 100 + `%` : `0%`)} 100%;
-  @media screen and (max-width: ${breakpoint.tablet}) {
-    width: 70vw;
-  }
-`
-class Play extends React.Component {
-  render () {
-    return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M5 3 19 12 5 21z"></path>
-      </svg>
-    )
-  }
-}
-class Pause extends React.Component {
-  render () {
-    return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="4" width="16" height="16"></rect>
-        {/* <rect x="14" y="4" width="4" height="16"></rect> */}
-      </svg>
-    )
-  }
-}
 @withRouter
 export default class Main extends Component {
   state = {
-    stop: false,
-    visible: false,
     swiper: null,
     thumbnailSwiper: null,
     albumIndex: 0,
-    url: mp3Src1,
-    playing: false,
-    played: 0,
-    duration: 0,
-    seeking: false,
     profile: ''
   }
 
@@ -215,64 +153,12 @@ export default class Main extends Component {
       })
     }
   }
-  goNext = () => {
-    this.load(mp3Src2)
-    if (this.state.albumIndex === 3) return
-    if (this.swiper) this.swiper.slideNext()
-    // console.log((this.state.albumIndex + 1) % 4)
+  setAlbumIndex = (index) => {
     this.setState({
-      albumIndex: (this.state.albumIndex + 1) % 4
+      albumIndex: index
     })
   }
-  goPrev = () => {
-    this.load(mp3Src2)
-    if (this.state.albumIndex === 0) return
-    if (this.swiper) this.swiper.slidePrev()
-    // console.log((this.state.albumIndex - 1) % 4)
-    this.setState({
-      albumIndex: (this.state.albumIndex - 1) % 4
-    })
-  }
-  moveToAlbum = (id) => {
-    this.setState({
-      albumIndex: id
-    })
-    if (this.swiper) this.swiper.slideTo(id)
-  }
-  toggleChecked = () => {
-    if (this.swiper) {
-      // this.swiper.slidePrev()
-      this.setState({
-        playing: !this.state.playing})
-    }
-  }
-  onSeekMouseDown = e => {
-    this.setState({ seeking: true })
-  }
-  onSeekChange = e => {
-    console.log(parseFloat(e.target.value))
-    this.setState({ played: parseFloat(e.target.value) })
-  }
-  onSeekMouseUp = e => {
-    this.setState({ seeking: false })
-    this.player.seekTo(parseFloat(e.target.value))
-  }
-  onProgress = state => {
-    // We only want to update time slider if we are not currently seeking
-    if (!this.state.seeking) {
-      this.setState(state)
-    }
-  }
-  load = url => {
-    this.setState({
-      url,
-      played: 0,
-      loaded: 0
-    })
-  }
-  ref = player => {
-    this.player = player
-  }
+
   login = () => {
     fetch('https://id.nctu.edu.tw/o/authorize/%3Fclient_id%3DdFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb%26scope%3Dprofile%26response_type%3Dcode')
       .then(res => res.json())
@@ -288,7 +174,6 @@ export default class Main extends Component {
       slidesPerView: 2,
       spaceBetween: 10,
       centeredSlides: true,
-      // loop: true,
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'
@@ -318,47 +203,23 @@ export default class Main extends Component {
               )
             }
           </Swiper>
-          <div style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
-            <StyledInput
-              type='range' min={0} max={1} step='any'
-              value={this.state.played}
-              onMouseDown={this.onSeekMouseDown}
-              onChange={this.onSeekChange}
-              onMouseUp={this.onSeekMouseUp}
-            />
-          </div>
 
-          <ReactPlayer
-            style={{ display: 'none' }}
-            ref={this.ref}
-            url={this.state.url}
-            onProgress={this.onProgress}
-            playing={this.state.playing} />
-          <ButtonGroup>
-            <SongButton onClick={this.goPrev}><ChevronsLeft/></SongButton>
-            <SongButton size={'45px'} style={{marginLeft: '6px'}} onClick={this.toggleChecked}>
-              <MorphReplace duration={400} width={45} height={45}>
-                {this.state.playing ? <Pause key="Pause" /> : <Play key="Play" />}
-              </MorphReplace>
-            </SongButton>
-            <SongButton onClick={this.goNext}><ChevronsRight/></SongButton>
-          </ButtonGroup>
+          <Containers.ui.Player
+            albumIndex={this.state.albumIndex}
+            setAlbumIndex={this.setAlbumIndex}
+            swiper={this.swiper}
+          />
         </SwiperWrapper>
 
         <Containers.ui.AlbumPreviewList
           albumIndex={this.state.albumIndex}
-          moveToAlbum={this.moveToAlbum}
+          setAlbumIndex={this.setAlbumIndex}
           swiper={this.swiper}
         />
         <Containers.ui.Footer />
-        {/* modal */}
-        {/* bubble */}
+
         <Containers.ui.Bubble/>
-        {/* bubble */}
+
       </StyleRoot>
     )
   }
