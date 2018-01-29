@@ -34,7 +34,7 @@ const Preview = styled.div`
     opacity: 0.35;
     margin: 0 30px;
     h4, p {
-      font-size: 10px;
+      font-size: 12px;
       margin: 0;
       color: white;
       font-weight: normal;
