@@ -36,8 +36,12 @@ const Info = styled.div`
   height: fit-content;
   padding: 20px;
   max-width: 1024px;
+  margin-top: 15vw;
+  margin-left: 15vw;
   @media screen and (max-width: ${breakpoint.tablet}) {
     width: 80vw;
+    margin-top: 0;
+    margin-left: 0;
   }
 `
 // const Video = styled.div`
@@ -138,7 +142,7 @@ const Seperator = styled.div`
 `
 const Content = styled.div`
   width: 100%;
-  height: fit-content;
+  height: 100%;
   display: flex;
   overflow: scroll;
   // padding: 0 20px 50px 20px;
@@ -156,7 +160,7 @@ const Detail = styled.p`
   line-height: 1.5;
   font-weight: 200;
   letter-spacing: 1px;
-  transform: translateX(-10px);
+  transform: translateX(0px);
 
   &.active {
     transform: translateX(0px);
@@ -166,7 +170,7 @@ const Detail = styled.p`
 `
 const ContentWrapper = styled.div`
   opacity: 0;
-
+  padding: 20px 0;
   &.active {
     transform: translateX(0px);
     transition: all 1s ease 0.5s;
@@ -193,6 +197,19 @@ const Line = styled.div`
   border-left: 1px solid rgba(29, 43, 111, 0.25);
   flex: 1;
   margin-left: 90px;
+`
+const Mention = styled.div`
+  p {
+    margin: 8px 0;
+  }
+  margin-bottom: 50px;
+`
+
+const Lyrics = styled.div`
+  p {
+    color: ${colors.bg_blue};
+    font-weight: bold;
+  }
 `
 @withRouter
 export default class AlbumWrapper extends Component {
@@ -230,25 +247,20 @@ export default class AlbumWrapper extends Component {
           <Info>
             <Header
               show={this.state.revealText}
-              text={'South of the River'}
+              text={'蘇立心的小歌歌'}
               delayMin={100}
               delayMax={1000}
               transitionTime={150} />
             <Subtitle
               show={this.state.revealText}
-              text={'Tom Mischl'}
+              text={'蘇立心與夥伴'}
               delayMin={100}
               delayMax={1000}
               transitionTime={150} />
             <Seperator />
             <ContentWrapper
-              className={this.state.revealText ? 'active' : null}
-              style={{
-                display: 'flex',
-                height: '80vh'
-              }}>
-
-              <div style={{ flex: 1 }}>
+              className={this.state.revealText ? 'active' : null}>
+              <Mention style={{ flex: 1 }}>
                 <Detail>
                   飄雨的午後，隨著雨珠點點滴滴的打在的，
                 </Detail>
@@ -295,9 +307,9 @@ export default class AlbumWrapper extends Component {
                 <Detail>
                   我緩緩唱著歌，今年我們要畢業了。
                 </Detail>
-              </div>
+              </Mention>
 
-              <div style={{ flex: 1, marginLeft: '50px' }}>
+              <Lyrics style={{ flex: 1 }}>
                 <Detail>一提到交大校園階級</Detail>
                 <Detail>就是學妹學長校狗學弟</Detail>
                 <Detail>不要 走心</Detail>
@@ -362,7 +374,7 @@ export default class AlbumWrapper extends Component {
                 <Detail>室友不但死會還可以拿卷</Detail>
                 <Detail>但還好我還有一群好同學</Detail>
                 <Detail>可以陪我一起魯一起耍廢</Detail>
-              </div>
+              </Lyrics>
             </ContentWrapper>
 
           </Info>
