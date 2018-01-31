@@ -8,8 +8,16 @@ import ReactPlayer from 'react-player'
 import { MorphReplace } from 'react-svg-morph'
 
 let mp3Src1 = 'https://soundcloud.com/tycho/tycho-awake'
-let mp3Src2 = 'https://soundcloud.com/miami-nights-1984/accelerated'
-
+// let mp3Src2 = 'https://soundcloud.com/miami-nights-1984/accelerated'
+let localmp3Src1 = require('assets/song/song1.mp3')
+let localmp3Src2 = require('assets/song/song2.mp3')
+let localmp3Src3 = require('assets/song/song3.mp3')
+let songList = [
+  mp3Src1,
+  localmp3Src1,
+  localmp3Src2,
+  localmp3Src3
+]
 import 'js/style/musicRange.js'
 
 const PlayerWrapper = styled.div`
@@ -100,18 +108,21 @@ export default class Main extends Component {
   }
 
   goNext = () => {
-    this.load(mp3Src1)
     if (this.props.albumIndex === 3) return
     if (this.props.swiper) this.props.swiper.slideNext()
 
+    this.load(songList[this.props.albumIndex + 1])
     this.props.setAlbumIndex((this.props.albumIndex + 1) % 4)
+
+    console.log(this.props.albumIndex, songList[this.props.albumIndex + 1])
   }
   goPrev = () => {
-    this.load(mp3Src2)
     if (this.props.albumIndex === 0) return
     if (this.props.swiper) this.props.swiper.slidePrev()
-
+    this.load(songList[this.props.albumIndex - 1])
     this.props.setAlbumIndex((this.props.albumIndex - 1) % 4)
+
+    console.log(this.props.albumIndex, songList[this.props.albumIndex - 1])
   }
 
   toggleChecked = () => {
@@ -149,6 +160,7 @@ export default class Main extends Component {
   }
 
   render () {
+    console.log(this.props)
     return (
       <PlayerWrapper>
 
