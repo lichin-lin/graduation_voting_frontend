@@ -9,9 +9,9 @@ import { MorphReplace } from 'react-svg-morph'
 
 let mp3Src1 = 'https://soundcloud.com/tycho/tycho-awake'
 // let mp3Src2 = 'https://soundcloud.com/miami-nights-1984/accelerated'
-let localmp3Src1 = require('assets/song/song1.mp3')
-let localmp3Src2 = require('assets/song/song2.mp3')
-let localmp3Src3 = require('assets/song/song3.mp3')
+let localmp3Src1 = 'https://soundcloud.com/lxzwg2zjxk1t/tkuickfcdu1n' // require('assets/song/song1.mp3')
+let localmp3Src2 = 'https://soundcloud.com/lxzwg2zjxk1t/oftr3os1brml' // require('assets/song/song2.mp3')
+let localmp3Src3 = 'https://soundcloud.com/lxzwg2zjxk1t/74fiow9syoeb' // require('assets/song/song3.mp3')
 let songList = [
   mp3Src1,
   localmp3Src1,
@@ -110,7 +110,7 @@ export default class Main extends Component {
   goNext = () => {
     if (this.props.albumIndex === 3) return
     if (this.props.swiper) this.props.swiper.slideNext()
-
+    this.toggleChecked()
     this.load(songList[this.props.albumIndex + 1])
     this.props.setAlbumIndex((this.props.albumIndex + 1) % 4)
 
@@ -119,17 +119,18 @@ export default class Main extends Component {
   goPrev = () => {
     if (this.props.albumIndex === 0) return
     if (this.props.swiper) this.props.swiper.slidePrev()
+    this.toggleChecked()
     this.load(songList[this.props.albumIndex - 1])
     this.props.setAlbumIndex((this.props.albumIndex - 1) % 4)
 
     console.log(this.props.albumIndex, songList[this.props.albumIndex - 1])
   }
 
-  toggleChecked = () => {
+  toggleChecked = (value = true) => {
     if (this.props.swiper) {
       // this.swiper.slidePrev()
       this.setState({
-        playing: !this.state.playing})
+        playing: !value})
     }
   }
   onSeekMouseDown = e => {
@@ -187,7 +188,7 @@ export default class Main extends Component {
 
         <ButtonGroup>
           <SongButton onClick={this.goPrev}><ChevronsLeft/></SongButton>
-          <SongButton size={'45px'} style={{marginLeft: '6px'}} onClick={this.toggleChecked}>
+          <SongButton size={'45px'} style={{marginLeft: '6px'}} onClick={() => this.toggleChecked(this.state.playing)}>
             <MorphReplace duration={400} width={45} height={45}>
               {this.state.playing ? <Pause key="Pause" /> : <Play key="Play" />}
             </MorphReplace>
