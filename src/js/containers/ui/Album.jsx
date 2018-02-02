@@ -165,18 +165,50 @@ export default class Album extends Component {
     this.setState({ visible: false })
   }
   vote = (id) => {
-    fetch(`${serverUrl}/vote?songid=${id}`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + store.get('accessToken')
-      }
-    })
-    .then(handleErrors)
-    .then((response) => {
-      response.json().then(data => {
-        if (data === 'Not enough segments' || data === 'Missing Authorization Header') {
+    swal({
+      title: '投票確認',
+      text: `您確定要投${id}一票嗎`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '確定投票',
+      cancelButtonText: '我在思考一下'
+    }).then((result) => {
+      if (result.value) {
+        fetch(`${serverUrl}/vote?songid=${id}`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + store.get('accessToken')
+          }
+        })
+        .then(handleErrors)
+        .then((response) => {
+          response.json().then(data => {
+            if (data === 'Not enough segments' || data === 'Missing Authorization Header') {
+              swal({
+                title: '有東西似乎出了一點問題...',
+                text: '你是不是還沒登入呢?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '我要登入',
+                cancelButtonText: '關閉'
+              })
+            } else if (data === 'already vote!') {
+              swal({
+                title: '您已經投過了',
+                text: '謝謝你不過你已經投完票了',
+                type: 'warning'
+              })
+            } else {
+              swal({
+                title: '謝謝你的支持',
+                text: '你成功投下你寶貴的一票了!',
+                type: 'success'
+              })
+            }
+          })
+        }, (error) => {
           swal({
             title: '有東西似乎出了一點問題...',
             text: '你是不是還沒登入呢?',
@@ -184,50 +216,30 @@ export default class Album extends Component {
             showCancelButton: true,
             confirmButtonText: '我要登入',
             cancelButtonText: '關閉'
+          }).then((result) => {
+            if (result.value) {
+              window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
+            }
           })
-        } else if (data === 'already vote!') {
+          console.log('err', error)
+        })
+        .catch(error => {
           swal({
-            title: '您已經投過了',
-            text: '謝謝你不過你已經投完票了',
-            type: 'warning'
+            title: '有東西似乎出了一點問題...',
+            text: '你是不是還沒登入呢?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '我要登入',
+            cancelButtonText: '關閉'
+          }).then((result) => {
+            if (result.value) {
+              window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
+            }
           })
-        } else {
-          swal({
-            title: '謝謝你的支持',
-            text: '你成功投下你寶貴的一票了!',
-            type: 'success'
-          })
-        }
-      })
-    }, (error) => {
-      swal({
-        title: '有東西似乎出了一點問題...',
-        text: '你是不是還沒登入呢?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: '我要登入',
-        cancelButtonText: '關閉'
-      }).then((result) => {
-        if (result.value) {
-          window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
-        }
-      })
-      console.log('err', error)
-    })
-    .catch(error => {
-      swal({
-        title: '有東西似乎出了一點問題...',
-        text: '你是不是還沒登入呢?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: '我要登入',
-        cancelButtonText: '關閉'
-      }).then((result) => {
-        if (result.value) {
-          window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
-        }
-      })
-      console.log('err', error)
+          console.log('err', error)
+        })
+      } else if (result.dismiss === 'cancel') {
+      }
     })
   }
   render () {
