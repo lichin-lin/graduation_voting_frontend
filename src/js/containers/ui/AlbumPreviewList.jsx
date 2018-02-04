@@ -39,6 +39,7 @@ const Preview = styled.div`
 export default class AlbumPreviewList extends Component {
   moveToAlbum = (id) => {
     this.props.setAlbumIndex(id)
+    this.props.togglePlaying(true)
     if (this.props.swiper) this.props.swiper.slideTo(id)
   }
 

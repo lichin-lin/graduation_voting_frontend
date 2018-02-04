@@ -125,14 +125,6 @@ export default class Main extends Component {
 
     console.log(this.props.albumIndex, songList[this.props.albumIndex - 1])
   }
-
-  toggleChecked = (value = true) => {
-    if (this.props.swiper) {
-      // this.swiper.slidePrev()
-      this.setState({
-        playing: !value})
-    }
-  }
   onSeekMouseDown = e => {
     this.setState({ seeking: true })
   }
@@ -184,13 +176,16 @@ export default class Main extends Component {
           ref={this.ref}
           url={this.state.url}
           onProgress={this.onProgress}
-          playing={this.state.playing} />
+          playing={this.props.playing} />
 
         <ButtonGroup>
           <SongButton onClick={this.goPrev}><ChevronsLeft/></SongButton>
-          <SongButton size={'45px'} style={{marginLeft: '6px'}} onClick={() => this.toggleChecked(this.state.playing)}>
+          <SongButton size={'45px'} style={{marginLeft: '6px'}} onClick={() => {
+            this.props.togglePlaying(this.props.playing)
+            this.load(songList[this.props.albumIndex])
+          }}>
             <MorphReplace duration={400} width={45} height={45}>
-              {this.state.playing ? <Pause key="Pause" /> : <Play key="Play" />}
+              {this.props.playing ? <Pause key="Pause" /> : <Play key="Play" />}
             </MorphReplace>
           </SongButton>
           <SongButton onClick={this.goNext}><ChevronsRight/></SongButton>

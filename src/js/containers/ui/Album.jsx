@@ -241,6 +241,7 @@ export default class Album extends Component {
   render () {
     return (
       <AlbumWrapper
+        id={this.props.id}
         className='swiper-slide'>
 
         <CoverTitle>

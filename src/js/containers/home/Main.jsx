@@ -93,7 +93,8 @@ export default class Main extends Component {
     swiper: null,
     thumbnailSwiper: null,
     albumIndex: 0,
-    profile: ''
+    profile: '',
+    playing: false
   }
 
   componentDidMount () {
@@ -131,7 +132,16 @@ export default class Main extends Component {
       albumIndex: index
     })
   }
-
+  toggleChecked = (value) => {
+    this.setState({ playing: !value })
+  }
+  load = url => {
+    this.setState({
+      url,
+      played: 0,
+      loaded: 0
+    })
+  }
   login = () => {
     fetch('https://id.nctu.edu.tw/o/authorize/%3Fclient_id%3DdFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb%26scope%3Dprofile%26response_type%3Dcode')
       .then(res => res.json())
@@ -148,9 +158,20 @@ export default class Main extends Component {
       spaceBetween: 10,
       centeredSlides: true,
       noSwiping: true,
+      shortSwipes: false,
+      longSwipes: false,
+      noSwipingClass: 'swiper-no-swiping',
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'
+      },
+      on: {
+        'slideChangeTransitionEnd': (swiper) => {
+          // find swiper-slide-active
+          let _id = document.getElementsByClassName('swiper-slide-active')[0].id
+          this.setAlbumIndex(parseInt(_id))
+          this.toggleChecked(true)
+        }
       }
     }
 
@@ -168,6 +189,7 @@ export default class Main extends Component {
               _.map(albumData, (album, id) =>
                 <Containers.ui.Album
                   key={id}
+                  id={id}
                   data={{
                     id: id,
                     coverSrc: album.coverSrc,
@@ -179,6 +201,8 @@ export default class Main extends Component {
           </Swiper>
 
           <Containers.ui.Player
+            playing={this.state.playing}
+            togglePlaying={this.toggleChecked}
             albumIndex={this.state.albumIndex}
             setAlbumIndex={this.setAlbumIndex}
             swiper={this.swiper}
@@ -187,12 +211,13 @@ export default class Main extends Component {
 
         <Containers.ui.AlbumPreviewList
           albumIndex={this.state.albumIndex}
+          togglePlaying={this.toggleChecked}
           setAlbumIndex={this.setAlbumIndex}
           swiper={this.swiper}
         />
         <Containers.ui.Footer />
 
-        <Containers.ui.Bubble/>
+        {/* <Containers.ui.Bubble/> */}
 
       </StyleRoot>
     )
