@@ -55,7 +55,7 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(html|otf|ttf|eot|png|gif|jpg|woff|woff2|svg|mp3)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        test: /\.(html|otf|ttf|eot|png|gif|jpg|woff|woff2|svg|mp3|wav)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         use: 'file-loader?name=[path][name].[ext]'
       }
     ]
