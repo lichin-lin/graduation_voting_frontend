@@ -7,7 +7,7 @@ import { ChevronsLeft, ChevronsRight } from 'react-feather'
 import ReactPlayer from 'react-player'
 import { MorphReplace } from 'react-svg-morph'
 
-let mp3Src1 = require('assets/song/With_You.wav') // 'https://soundcloud.com/tycho/tycho-awake'
+let mp3Src1 = require('assets/song/With_You.mp3') // 'https://soundcloud.com/tycho/tycho-awake'
 // let mp3Src2 = 'https://soundcloud.com/miami-nights-1984/accelerated'
 let localmp3Src1 = 'https://soundcloud.com/lxzwg2zjxk1t/tkuickfcdu1n' // require('assets/song/song1.mp3')
 let localmp3Src2 = 'https://soundcloud.com/lxzwg2zjxk1t/oftr3os1brml' // require('assets/song/song2.mp3')
