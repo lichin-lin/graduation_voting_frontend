@@ -164,14 +164,24 @@ export default class Album extends Component {
   hide = () => {
     this.setState({ visible: false })
   }
+  ModalError = () => {
+    swal({
+      title: '有東西似乎出了一點問題...',
+      text: '你是不是還沒登入呢?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '我要登入',
+      cancelButtonText: '關閉'
+    })
+  }
   vote = (id) => {
     swal({
       title: '投票確認',
-      text: `您確定要投${id}一票嗎`,
+      text: `您確定要投 ${this.props.data.title} 一票嗎`,
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: '確定投票',
-      cancelButtonText: '我在思考一下'
+      cancelButtonText: '再思考一下'
     }).then((result) => {
       if (result.value) {
         fetch(`${serverUrl}/vote?songid=${id}`, {
@@ -209,14 +219,7 @@ export default class Album extends Component {
             }
           })
         }, (error) => {
-          swal({
-            title: '有東西似乎出了一點問題...',
-            text: '你是不是還沒登入呢?',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: '我要登入',
-            cancelButtonText: '關閉'
-          }).then((result) => {
+          this.ModalError().then((result) => {
             if (result.value) {
               window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
             }
@@ -224,14 +227,7 @@ export default class Album extends Component {
           console.log('err', error)
         })
         .catch(error => {
-          swal({
-            title: '有東西似乎出了一點問題...',
-            text: '你是不是還沒登入呢?',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: '我要登入',
-            cancelButtonText: '關閉'
-          }).then((result) => {
+          this.ModalError().then((result) => {
             if (result.value) {
               window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
             }
@@ -249,7 +245,6 @@ export default class Album extends Component {
 
         <CoverTitle>
           <h3>{this.props.data.title}</h3>
-          <h4>{this.props.data.group}</h4>
         </CoverTitle>
 
         <BtnGroup>
@@ -273,7 +268,7 @@ export default class Album extends Component {
           contentLabel='Modal'>
 
           <Containers.ui.AlbumDetail
-            id={this.props.data.id + 1}
+            id={this.props.data.id}
             hide={this.hide}
           />
         </StyledReactModal>

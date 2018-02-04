@@ -8,36 +8,9 @@ import { breakpoint } from 'js/style/utils.js'
 import _ from 'lodash'
 import store from 'store2'
 import { serverUrl } from 'js/utils/ServerConfig'
-
-let album1 = require('assets/image/b1.png')
-let album2 = require('assets/image/b2.jpg')
-let album3 = require('assets/image/b3.jpg')
-let album4 = require('assets/image/b4.jpg')
-
+import { albumData } from 'js/utils/data'
 import 'js/style/musicRange.js'
 
-const albumData = [
-  {
-    src: album1,
-    title: 'BangRangGa',
-    group: 'Minjae Jung'
-  },
-  {
-    src: album2,
-    title: 'LOS HERALDOS NEGROS',
-    group: 'Mayte Alvarado'
-  },
-  {
-    src: album3,
-    title: 'Forest',
-    group: 'Arun Mehmi'
-  },
-  {
-    src: album4,
-    title: 'Forest',
-    group: 'Arun Mehmi'
-  }
-]
 const StyleRoot = styled.div`
   width: 100%;
   height: auto;
@@ -196,7 +169,7 @@ export default class Main extends Component {
                   key={id}
                   data={{
                     id: id,
-                    coverSrc: album.src,
+                    coverSrc: album.coverSrc,
                     title: album.title,
                     group: album.group
                   }}/>

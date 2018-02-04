@@ -3,26 +3,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { breakpoint } from 'js/style/utils.js'
-import _ from 'lodash'
+import { albumData } from 'js/utils/data'
 
-const albumData = [
-  {
-    title: 'BangRangGa',
-    group: 'Minjae Jung'
-  },
-  {
-    title: 'LOS HERALDOS NEGROS',
-    group: 'Mayte Alvarado'
-  },
-  {
-    title: 'Forest',
-    group: 'Arun Mehmi'
-  },
-  {
-    title: 'Forest',
-    group: 'Arun Mehmi'
-  }
-]
+import _ from 'lodash'
 
 const Preview = styled.div`
   z-index: 1;
@@ -70,7 +53,6 @@ export default class AlbumPreviewList extends Component {
               onClick={() => this.moveToAlbum(id)}>
               <p>0{id + 1}</p>
               <h4>{el.title}</h4>
-              <h4>- {el.group}</h4>
             </div>
           )
         }

@@ -4,10 +4,11 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { breakpoint } from 'js/style/utils.js'
 // import { fontSize } from 'js/style/font.js'
+import _ from 'lodash'
 import ReactRevealText from 'react-reveal-text'
 import colors from 'js/style/colors.js'
 import { X } from 'react-feather'
-// import ReactPlayer from 'react-player'
+import { albumData } from 'js/utils/data'
 
 const DetailWrapper = styled.div`
   width: 100vw;
@@ -116,19 +117,19 @@ const Header = StyledRevealText.extend`
   }
 `
 const Subtitle = StyledRevealText.extend`
-  font-size: 36px;
-  line-height: 36px;
+  font-size: 20px;
+  line-height: 20px;
   span {
-    font-size: 36px;
-    line-height: 36px;
+    font-size: 20px;
+    line-height: 20px;
   }
   color: ${colors.bg_blue};
   margin-bottom: 20px;
   @media screen and (max-width: ${breakpoint.tablet}) {
-    font-size: 1.25em;
+    font-size: 1em;
     line-height: 1em;
     span {
-      font-size: 1.25em;
+      font-size: 1em;
       line-height: 1em;
     }
   }
@@ -247,133 +248,55 @@ export default class AlbumWrapper extends Component {
           <Info>
             <Header
               show={this.state.revealText}
-              text={'蘇立心的小歌歌'}
+              text={albumData[this.props.id].title}
               delayMin={100}
               delayMax={1000}
               transitionTime={150} />
-            <Subtitle
-              show={this.state.revealText}
-              text={'蘇立心與夥伴'}
-              delayMin={100}
-              delayMax={1000}
-              transitionTime={150} />
+              {
+                _.map(albumData[this.props.id].member, (line, id) =>
+                  <Subtitle
+                    show={this.state.revealText}
+                    text={line}
+                    delayMin={100}
+                    delayMax={1000}
+                    transitionTime={150} />
+                )
+              }
             <Seperator />
             <ContentWrapper
               className={this.state.revealText ? 'active' : null}>
               <Mention style={{ flex: 1 }}>
-                <Detail>
-                  飄雨的午後，隨著雨珠點點滴滴的打在的，
-                </Detail>
-                <Detail>
-                  是我紛亂的不捨的心
-                </Detail>
-                <Detail>
-                  走在混亂的街，忽然入耳的，是這麼一段旋律
-                </Detail>
-                <Detail>
-                  伴隨這緩緩的樂音，訴說著悠悠的未來，
-                </Detail>
-                <Detail>
-                  喜歡這暖暖的文字，洋溢著滿滿的幸福。
-                </Detail>
-                <Break />
-
-                <Detail>
-                  隨著旋律的起伏，思緒由前至後，由上到下，由遠到近，
-                </Detail>
-                <Detail>
-                  那是一個穿梭時空的迷幻的知覺，
-                </Detail>
-                <Detail>
-                  血液正在加速竄流於全身，撲通撲通撲通，動次動次動次，
-                </Detail>
-                <Detail>
-                  鼓聲在我血液中，抨擊著！
-                </Detail>
-                <Detail>
-                  歌聲在我血液中，奔放著！
-                </Detail>
-                <Break />
-
-                <Detail>
-                  滾燙的熱淚緩緩流下，
-                </Detail>
-                <Detail>
-                  炙熱的太陽緩緩地從雲間透出，
-                </Detail>
-                <Detail>
-                  漸漸地打亮著我的臉龐，
-                </Detail>
-                <Detail>
-                  我緩緩唱著歌，今年我們要畢業了。
-                </Detail>
+                {
+                  _.map(albumData[this.props.id].mention, (lines, id) =>
+                    <div key={id}>
+                      {
+                        _.map(lines, (line, id) =>
+                        <Detail>
+                          {line}
+                        </Detail>
+                        )
+                      }
+                      <Break />
+                    </div>
+                  )
+                }
               </Mention>
 
               <Lyrics style={{ flex: 1 }}>
-                <Detail>一提到交大校園階級</Detail>
-                <Detail>就是學妹學長校狗學弟</Detail>
-                <Detail>不要 走心</Detail>
-                <Detail>請你看看路上男女比</Detail>
-
-                <Detail>一開學就在期待放假</Detail>
-                <Detail>e3的作業待繳從沒停下</Detail>
-                <Detail>期中 爆炸</Detail>
-                <Detail>期末只好跪著求學霸</Detail>
-
-                <Detail>就這樣一年過了一年</Detail>
-                <Detail>還是要揪團打lol吃吃宵夜</Detail>
-                <Detail>別再 熬夜</Detail>
-                <Detail>還要帶著肝進台積電</Detail>
-
-                <Detail>問自己四年有沒有變</Detail>
-                <Detail>是否該帶一些回憶紀念</Detail>
-                <Detail>浩然 過夜</Detail>
-                <Detail>或是搭訕學妹約逛校園</Detail>
-
-                <Detail>從交大畢業</Detail>
-                <Detail>往夢想起飛</Detail>
-                <Detail>路途再遙遠</Detail>
-                <Detail>我還有你陪</Detail>
-
-                <Detail>回首這四年</Detail>
-                <Detail>有歡笑淚水</Detail>
-                <Detail>別害怕離別</Detail>
-                <Detail>要勇往直前</Detail>
-
-                <Detail>記得剛上大一心裡有多少憧憬</Detail>
-                <Detail>只看名字選課也不管教授鬆緊</Detail>
-                <Detail>想像自己要看遍 所有的風景</Detail>
-                <Detail>明天微積分會考 哦 那是什麼東西</Detail>
-
-                <Detail>暑假辦過的營隊 努力不是為了名位</Detail>
-                <Detail>這過程 有笑有淚 有high有醉</Detail>
-                <Detail>有過台下的掌聲  也有過爭吵的心碎</Detail>
-                <Detail>多少風風雨雨 我們都一起面對</Detail>
-
-                <Detail>難道長大就是痛苦 沒人理解的痛楚</Detail>
-                <Detail>只想爬到高處 新的高度 不想跌回低谷</Detail>
-                <Detail>曾經的homie 都不在 只有自己 能依賴</Detail>
-                <Detail>別想要 沒有準備 就去應對 不是每次都能靠賽</Detail>
-
-                <Detail>種種回憶如此寶貴 追夢的心不曾倒退</Detail>
-                <Detail>希望到了以後 還能保持原有的純粹</Detail>
-                <Detail>面對未來不會再慫 無理的要求不再聽從</Detail>
-                <Detail>曾經我以交大為榮 畢業後交大以我為榮</Detail>
-
-                <Detail>從交大畢業 (It’s time to graduate)</Detail>
-                <Detail>往夢想起飛 (Find your own way)</Detail>
-                <Detail>路途再遙遠 (Please don’t be afraid)</Detail>
-                <Detail>我還有你陪 (That’s needless to say)</Detail>
-
-                <Detail>回首這四年 (想要對你說的話）</Detail>
-                <Detail>有歡笑淚水 (全部放在心裏底）</Detail>
-                <Detail>別害怕離別 (有我跟你黏作伙）</Detail>
-                <Detail>要勇往直前 (不管困難有多少）</Detail>
-
-                <Detail>傳情我都傳給自己當作安慰</Detail>
-                <Detail>室友不但死會還可以拿卷</Detail>
-                <Detail>但還好我還有一群好同學</Detail>
-                <Detail>可以陪我一起魯一起耍廢</Detail>
+                {
+                  _.map(albumData[this.props.id].lyrics, (lines, id) =>
+                    <div key={id}>
+                      {
+                        _.map(lines, (line, id) =>
+                        <Detail>
+                          {line}
+                        </Detail>
+                        )
+                      }
+                      <Break />
+                    </div>
+                  )
+                }
               </Lyrics>
             </ContentWrapper>
 
