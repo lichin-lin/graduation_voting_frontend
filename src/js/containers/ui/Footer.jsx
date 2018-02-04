@@ -6,6 +6,9 @@ import { breakpoint } from 'js/style/utils.js'
 import Lottie from 'react-lottie'
 // let peopleSrc = require('assets/image/people.png')
 import * as animationData from 'assets/lottie/data.json'
+import {
+  FacebookShareButton
+} from 'react-share'
 
 const Intro = styled.div`
   z-index: 1;
@@ -111,7 +114,7 @@ export default class Footer extends Component {
           這是交通大學 107 級畢業歌投票網站，由
           <span>
             <a
-              href='https://www.facebook.com/NCTUgraduate/'
+              href='https://www.facebook.com/%E4%BA%A4%E5%A4%A7107%E7%B4%9A%E7%95%A2%E8%81%AF%E6%9C%83-%E4%BA%A4%E7%AB%99-392431351175821/?hc_ref=ARRqXRnTPVxXNDYGqJFr4omZPzF80UU6Ev4_mv0C3T4D1cdBm_J6M_aflhb6EBGKmaY'
               target='_blank'
               onMouseLeave={this.LottieStop}
               onMouseEnter={this.LottieStart}>
@@ -124,10 +127,15 @@ export default class Footer extends Component {
             onMouseEnter={this.LottieStart}
             href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></span>
           才能夠投票的噢。如果想要讓周遭朋友知道這個消息，趕快
-          <span><a
-            onMouseLeave={this.LottieStop}
-            onMouseEnter={this.LottieStart}
-            href='https://www.facebook.com/NCTUgraduate/' target='_blank'>大力分享</a></span>
+          <FacebookShareButton
+            url={'https://107songs.nctu.me/'}
+            className="Demo__some-network__share-button"
+            style={{ display: 'inline' }}>
+            <span><a
+              onMouseLeave={this.LottieStop}
+              onMouseEnter={this.LottieStart}
+              href='https://107songs.nctu.me/' target='_blank'>大力分享</a></span>
+          </FacebookShareButton>
           ，讓更多人知道這些很棒的音樂。
           <h4>
             * website made with love by lichin, design by Green

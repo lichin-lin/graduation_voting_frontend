@@ -110,7 +110,7 @@ export default class Main extends Component {
   goNext = () => {
     if (this.props.albumIndex === 3) return
     if (this.props.swiper) this.props.swiper.slideNext()
-    this.toggleChecked()
+    this.props.togglePlaying(true)
     this.load(songList[this.props.albumIndex + 1])
     this.props.setAlbumIndex((this.props.albumIndex + 1) % 4)
 
@@ -119,7 +119,7 @@ export default class Main extends Component {
   goPrev = () => {
     if (this.props.albumIndex === 0) return
     if (this.props.swiper) this.props.swiper.slidePrev()
-    this.toggleChecked()
+    this.props.togglePlaying(true)
     this.load(songList[this.props.albumIndex - 1])
     this.props.setAlbumIndex((this.props.albumIndex - 1) % 4)
 
