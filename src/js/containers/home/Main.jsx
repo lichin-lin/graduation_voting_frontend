@@ -147,6 +147,7 @@ export default class Main extends Component {
       slidesPerView: 2,
       spaceBetween: 10,
       centeredSlides: true,
+      noSwiping: true,
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'
