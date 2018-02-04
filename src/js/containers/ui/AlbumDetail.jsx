@@ -158,7 +158,7 @@ const Detail = styled.p`
 
   color: #50514F;
   text-align: justify;
-  line-height: 1.5;
+  line-height: 1.25;
   font-weight: 200;
   letter-spacing: 1px;
   transform: translateX(0px);
@@ -184,7 +184,7 @@ const BackgroundLineGroup = styled.div`
   left: 0;
   width: calc(100vw - 10px);
   height: 100%;
-  background: #FFD8D8;
+  background: ${colors.bg_albumDetail};
   // background: #E0FCFF;
   z-index: -1;
   display: flex;
@@ -255,6 +255,7 @@ export default class AlbumWrapper extends Component {
               {
                 _.map(albumData[this.props.id].member, (line, id) =>
                   <Subtitle
+                    key={id}
                     show={this.state.revealText}
                     text={line}
                     delayMin={100}

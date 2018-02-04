@@ -14,7 +14,8 @@ export default {
   footerGray: '#000',
   ci: '#FCEE21',
   // voting
-  bg_blue: '#1D2B6F',
+  bg_blue: '#1F3291',
+  bg_albumDetail: '#EDC7BB',
   // bg_blue: '#161616',
   pink: '#DD6BA5',
   pink_light: '#ff1783',
