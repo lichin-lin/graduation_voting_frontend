@@ -16,8 +16,6 @@ let songList = [
   mp3Src3
 ]
 import ReactGA from 'react-ga'
-ReactGA.initialize('UA-74093364-15')
-
 import 'js/style/musicRange.js'
 
 const PlayerWrapper = styled.div`
@@ -108,12 +106,15 @@ export default class Main extends Component {
   }
 
   goNext = () => {
-    if (this.props.albumIndex === 3) return
+    if (this.props.albumIndex === 2) return
     if (this.props.swiper) this.props.swiper.slideNext()
     this.props.togglePlaying(true)
     this.load(songList[this.props.albumIndex + 1])
     this.props.setAlbumIndex((this.props.albumIndex + 1) % 4)
-
+    ReactGA.event({
+      category: 'User Action',
+      action: `goNext song ${this.props.albumIndex + 1}`
+    })
     // console.log(this.props.albumIndex, songList[this.props.albumIndex + 1])
   }
   goPrev = () => {
@@ -122,7 +123,10 @@ export default class Main extends Component {
     this.props.togglePlaying(true)
     this.load(songList[this.props.albumIndex - 1])
     this.props.setAlbumIndex((this.props.albumIndex - 1) % 4)
-
+    ReactGA.event({
+      category: 'User Action',
+      action: `goPrev song ${this.props.albumIndex - 1}`
+    })
     // console.log(this.props.albumIndex, songList[this.props.albumIndex - 1])
   }
   onSeekMouseDown = e => {

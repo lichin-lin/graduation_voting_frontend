@@ -8,6 +8,9 @@ import { Switch, Route } from 'react-router'
 import { withRouter } from 'react-router-dom'
 import { breakpoint } from 'js/style/utils.js'
 
+import ReactGA from 'react-ga'
+ReactGA.initialize('UA-74093364-15')
+
 import styled from 'styled-components'
 import 'js/style/global.js'
 

@@ -6,7 +6,6 @@ import { breakpoint } from 'js/style/utils.js'
 import { albumData } from 'js/utils/data'
 
 import ReactGA from 'react-ga'
-ReactGA.initialize('UA-74093364-15')
 
 import _ from 'lodash'
 
@@ -58,7 +57,7 @@ export default class AlbumPreviewList extends Component {
                 this.moveToAlbum(id)
                 ReactGA.event({
                   category: 'User Action',
-                  action: `move to album ${id + 1}`
+                  action: `move to song ${id + 1}`
                 })
               }}>
               <p>0{id + 1}</p>

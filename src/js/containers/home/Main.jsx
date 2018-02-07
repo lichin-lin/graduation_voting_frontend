@@ -12,7 +12,6 @@ import { albumData } from 'js/utils/data'
 import 'js/style/musicRange.js'
 
 import ReactGA from 'react-ga'
-ReactGA.initialize('UA-74093364-15')
 
 const StyleRoot = styled.div`
   width: 100%;
@@ -177,6 +176,10 @@ export default class Main extends Component {
           // find swiper-slide-active
           let _id = document.getElementsByClassName('swiper-slide-active')[0].id
           this.setAlbumIndex(parseInt(_id))
+          ReactGA.event({
+            category: 'User Action',
+            action: `swiper to song ${parseInt(_id) + 1}`
+          })
           this.toggleChecked(true)
         }
       }

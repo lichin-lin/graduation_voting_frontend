@@ -138,7 +138,7 @@ export default class Footer extends Component {
           </FacebookShareButton>
           ，讓更多人知道這些很棒的音樂。
           <h4>
-            * website made with love by lichin, design by Green
+            * website made with love by lichin, designed by Green
           </h4>
         </IntroContent>
       </Intro>
