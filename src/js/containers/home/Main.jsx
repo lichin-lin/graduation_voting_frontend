@@ -105,6 +105,18 @@ export default class Main extends Component {
     let code = params.get('code')
     console.log(code, serverUrl)
 
+    let VoteDataUrl = `${serverUrl}/analytics}`
+    fetch(VoteDataUrl)
+      .then(res => res.json())
+      .then(result => {
+        console.log('res', result)
+        this.setState({
+          data: result
+        })
+      }, (error) => {
+        console.log('err', error)
+      }
+    )
     if (_.size(code) > 0) {
       // if get code
       let url = `${serverUrl}/auth?code=${this.props.location.search.slice(6)}`

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import colors from 'js/style/colors.js'
 import styled from 'styled-components'
 import { breakpoint } from 'js/style/utils.js'
+import { serverUrl } from 'js/utils/ServerConfig'
+import store from 'store2'
 
 let logoSrc = require('assets/image/logo.png')
 let titleSrc = require('assets/image/title.png')
@@ -83,6 +85,11 @@ export default class Header extends Component {
             ? <div><a href=''>已登入, {this.props.profile.username}</a></div>
             : <div><a href='https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'>登入</a></div>
           }
+          <div><a href='' onClick={() => {
+            store.remove('accessToken')
+            store.remove('profile')
+            window.location = {serverUrl}
+          }}>登出</a></div>
         </Navbar>
       </StyledHeader>
     )
