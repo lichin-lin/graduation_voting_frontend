@@ -1,7 +1,5 @@
 import { injectGlobal } from 'styled-components'
 import { fontSize } from 'js/style/font.js'
-import FuturaRegular from 'assets/font/FuturaCondensedRegular.ttf'
-import FuturaMedium from 'assets/font/FuturaCondensedMedium.otf'
 import GENJMedium from 'assets/font/genjyuugothic/GenJyuuGothic-Medium.ttf'
 import GENJBold from 'assets/font/genjyuugothic/GenJyuuGothic-Bold.ttf'
 
@@ -18,20 +16,6 @@ injectGlobal`
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
-  @font-face {
-    font-family: FuturaRegular;
-    src: url('${FuturaRegular}') format('opentype');
-  }
-
-  @font-face {
-    font-family: FuturaMedium;
-    src: url('${FuturaMedium}') format('opentype');
-  }
-
-  @font-face {
-    font-family: FuturaMedium;
-    src: url('${FuturaMedium}') format('opentype');
-  }
   @font-face {
       font-family: GENJ;
       font-style: normal;
