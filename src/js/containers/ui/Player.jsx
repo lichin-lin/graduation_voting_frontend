@@ -15,6 +15,9 @@ let songList = [
   mp3Src2,
   mp3Src3
 ]
+import ReactGA from 'react-ga'
+ReactGA.initialize('UA-74093364-15')
+
 import 'js/style/musicRange.js'
 
 const PlayerWrapper = styled.div`
@@ -111,7 +114,7 @@ export default class Main extends Component {
     this.load(songList[this.props.albumIndex + 1])
     this.props.setAlbumIndex((this.props.albumIndex + 1) % 4)
 
-    console.log(this.props.albumIndex, songList[this.props.albumIndex + 1])
+    // console.log(this.props.albumIndex, songList[this.props.albumIndex + 1])
   }
   goPrev = () => {
     if (this.props.albumIndex === 0) return
@@ -120,7 +123,7 @@ export default class Main extends Component {
     this.load(songList[this.props.albumIndex - 1])
     this.props.setAlbumIndex((this.props.albumIndex - 1) % 4)
 
-    console.log(this.props.albumIndex, songList[this.props.albumIndex - 1])
+    // console.log(this.props.albumIndex, songList[this.props.albumIndex - 1])
   }
   onSeekMouseDown = e => {
     this.setState({ seeking: true })
@@ -150,7 +153,7 @@ export default class Main extends Component {
   }
 
   render () {
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <PlayerWrapper>
 

@@ -14,6 +14,9 @@ import swal from 'sweetalert2'
 let vinyl = require('assets/image/vinyl.png')
 ReactModal.setAppElement('#app')
 
+import ReactGA from 'react-ga'
+ReactGA.initialize('UA-74093364-15')
+
 const AlbumWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -159,6 +162,10 @@ export default class Album extends Component {
     errorShow: false
   }
   show = () => {
+    ReactGA.event({
+      category: 'User Action',
+      action: `open album detail ${this.props.data.id + 1}`
+    })
     this.setState({ visible: true })
   }
   hide = () => {
@@ -172,6 +179,10 @@ export default class Album extends Component {
       showCancelButton: true,
       confirmButtonText: '我要登入',
       cancelButtonText: '關閉'
+    }).then(result => {
+      if (result.value) {
+        window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
+      }
     })
   }
   vote = (id) => {
@@ -194,16 +205,10 @@ export default class Album extends Component {
         })
         .then(handleErrors)
         .then((response) => {
+          console.log('response', response)
           response.json().then(data => {
             if (data === 'Not enough segments' || data === 'Missing Authorization Header') {
-              swal({
-                title: '有東西似乎出了一點問題...',
-                text: '你是不是還沒登入呢?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: '我要登入',
-                cancelButtonText: '關閉'
-              })
+              this.ModalError()
             } else if (data === 'already vote!') {
               swal({
                 title: '您已經投過了',
@@ -219,19 +224,11 @@ export default class Album extends Component {
             }
           })
         }, (error) => {
-          this.ModalError().then((result) => {
-            if (result.value) {
-              window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
-            }
-          })
+          this.ModalError()
           console.log('err', error)
         })
         .catch(error => {
-          this.ModalError().then((result) => {
-            if (result.value) {
-              window.location = 'https://id.nctu.edu.tw/o/authorize/?client_id=dFo3aTrp02yAzzHgaYNf90IUGe15ASgZfb6Wl2gb&scope=profile&response_type=code'
-            }
-          })
+          this.ModalError()
           console.log('err', error)
         })
       } else if (result.dismiss === 'cancel') {

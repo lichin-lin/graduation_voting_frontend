@@ -11,6 +11,9 @@ import { serverUrl } from 'js/utils/ServerConfig'
 import { albumData } from 'js/utils/data'
 import 'js/style/musicRange.js'
 
+import ReactGA from 'react-ga'
+ReactGA.initialize('UA-74093364-15')
+
 const StyleRoot = styled.div`
   width: 100%;
   height: auto;
@@ -133,6 +136,10 @@ export default class Main extends Component {
     })
   }
   toggleChecked = (value) => {
+    ReactGA.event({
+      category: 'User Action',
+      action: `toggle song ${this.state.albumIndex + 1}`
+    })
     this.setState({ playing: !value })
   }
   load = url => {
