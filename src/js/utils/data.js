@@ -1,6 +1,6 @@
-let album1 = require('assets/image/b1.png')
-let album2 = require('assets/image/b2.jpg')
-let album3 = require('assets/image/b3.jpg')
+let album1 = require('assets/image/song1.png')
+let album2 = require('assets/image/song2.png')
+let album3 = require('assets/image/song3.png')
 
 export const albumData = [
   {
