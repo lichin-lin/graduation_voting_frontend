@@ -5,6 +5,9 @@ import { withRouter } from 'react-router-dom'
 import { breakpoint } from 'js/style/utils.js'
 import { albumData } from 'js/utils/data'
 
+import Amplitude from 'react-amplitude'
+Amplitude.init('682a22bbc67f515063a5967254b840c1')
+
 import _ from 'lodash'
 
 const Preview = styled.div`
@@ -51,7 +54,10 @@ export default class AlbumPreviewList extends Component {
             <div
               key={id}
               className={this.props.albumIndex === id ? 'active' : null}
-              onClick={() => this.moveToAlbum(id)}>
+              onClick={() => {
+                this.moveToAlbum(id)
+                Amplitude.logEvent(`move to album${id}`)
+              }}>
               <p>0{id + 1}</p>
               <h4>{el.title}</h4>
             </div>
