@@ -236,6 +236,7 @@ export default class Album extends Component {
     })
   }
   render () {
+    console.log(this.props.data.counter)
     return (
       <AlbumWrapper
         id={this.props.id}
@@ -243,6 +244,7 @@ export default class Album extends Component {
 
         <CoverTitle>
           <h3>{this.props.data.title}</h3>
+          <h4>目前票數: {this.props.data.counter}</h4>
         </CoverTitle>
 
         <BtnGroup>

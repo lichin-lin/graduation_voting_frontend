@@ -96,7 +96,8 @@ export default class Main extends Component {
     thumbnailSwiper: null,
     albumIndex: 0,
     profile: '',
-    playing: false
+    playing: false,
+    data: [0, 0, 0]
   }
 
   componentDidMount () {
@@ -105,13 +106,13 @@ export default class Main extends Component {
     let code = params.get('code')
     console.log(code, serverUrl)
 
-    let VoteDataUrl = `${serverUrl}/analytics}`
+    let VoteDataUrl = `https://107songs.nctu.me/analytics`
     fetch(VoteDataUrl)
       .then(res => res.json())
       .then(result => {
-        console.log('res', result)
+        let _data = _.map(result, r => { return r['count(songid)'] })
         this.setState({
-          data: result
+          data: _data
         })
       }, (error) => {
         console.log('err', error)
@@ -214,6 +215,7 @@ export default class Main extends Component {
                   id={id}
                   data={{
                     id: id,
+                    counter: this.state.data[id],
                     coverSrc: album.coverSrc,
                     title: album.title,
                     group: album.group
