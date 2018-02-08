@@ -55,7 +55,6 @@ export default class App extends Component {
     this.updateDimensions()
   }
   componentDidMount () {
-    window.addEventListener('resize', this.updateDimensions)
   }
   componentWillUnmount () {
     window.removeEventListener('resize', this.updateDimensions)
@@ -66,6 +65,7 @@ export default class App extends Component {
 
     return (
       <StyleRoot>
+
         <Section>
           <Switch>
             <Route path="/" component={Containers.home.Main} />

@@ -10,7 +10,6 @@ import store from 'store2'
 import { serverUrl } from 'js/utils/ServerConfig'
 import { albumData } from 'js/utils/data'
 import 'js/style/musicRange.js'
-
 import ReactGA from 'react-ga'
 
 const StyleRoot = styled.div`
@@ -242,7 +241,7 @@ export default class Main extends Component {
         <Containers.ui.Footer />
 
         {/* <Containers.ui.Bubble/> */}
-
+        <Containers.ui.Circles/>
       </StyleRoot>
     )
   }
