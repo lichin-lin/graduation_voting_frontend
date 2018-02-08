@@ -111,7 +111,7 @@
       });
 
       demo.setup = function() {
-
+        console.log('setup')
         // Set off some initial particles.
         var i, x, y;
 
@@ -120,6 +120,7 @@
           y = ( demo.height * 0.5 ) + random( -100, 100 );
           demo.spawn( x, y );
         }
+        demo.draw
       };
 
       demo.spawn = function( x, y ) {
@@ -177,6 +178,7 @@
       };
 
       window.addEventListener('mousemove', (e) => {
+        console.log('yolo', e);
         var particle, theta, force, touch, max, i, j, n;
 
         for ( i = 0, n = demo.touches.length; i < n; i++ ) {
