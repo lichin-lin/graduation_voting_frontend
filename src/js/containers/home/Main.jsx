@@ -241,7 +241,7 @@ export default class Main extends Component {
         <Containers.ui.Footer />
 
         {/* <Containers.ui.Bubble/> */}
-        <Containers.ui.Circles/>
+        {/* <Containers.ui.Circles/> */}
       </StyleRoot>
     )
   }
