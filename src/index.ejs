@@ -99,7 +99,6 @@
     };
 
     if (document.documentElement.clientWidth > 1024) {
-      console.log('desktop')
       var MAX_PARTICLES = 50;
       var COLOURS = [ '#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423' ];
 
@@ -111,7 +110,6 @@
       });
 
       demo.setup = function() {
-        console.log('setup')
         // Set off some initial particles.
         var i, x, y;
 
@@ -178,7 +176,6 @@
       };
 
       window.addEventListener('mousemove', (e) => {
-        console.log('yolo', e);
         var particle, theta, force, touch, max, i, j, n;
 
         for ( i = 0, n = demo.touches.length; i < n; i++ ) {
@@ -188,7 +185,6 @@
         }
       }, false)
     } else {
-      console.log('mobile')
     }
     </script>
 </html>
