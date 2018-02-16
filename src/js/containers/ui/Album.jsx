@@ -7,8 +7,6 @@ import { breakpoint } from 'js/style/utils.js'
 import { fontSize } from 'js/style/font.js'
 import colors from 'js/style/colors.js'
 import ReactModal from 'react-modal'
-import store from 'store2'
-import { serverUrl } from 'js/utils/ServerConfig'
 import swal from 'sweetalert2'
 
 let vinyl = require('assets/image/vinyl.png')
@@ -148,12 +146,6 @@ const BtnGroup = styled.div`
     }
   }
 `
-function handleErrors (response) {
-  if (!response.ok) {
-    throw Error(response.statusText)
-  }
-  return response
-}
 
 @withRouter
 export default class Album extends Component {
@@ -187,52 +179,10 @@ export default class Album extends Component {
   }
   vote = (id) => {
     swal({
-      title: '投票確認',
-      text: `您確定要投 ${this.props.data.title} 一票嗎`,
+      title: '投票時間已結束',
+      text: `謝謝您的參與請期待明年的畢業歌`,
       type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: '確定投票',
-      cancelButtonText: '再思考一下'
-    }).then((result) => {
-      if (result.value) {
-        fetch(`${serverUrl}/vote?songid=${id}`, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + store.get('accessToken')
-          }
-        })
-        .then(handleErrors)
-        .then((response) => {
-          console.log('response', response)
-          response.json().then(data => {
-            if (data === 'Not enough segments' || data === 'Missing Authorization Header') {
-              this.ModalError()
-            } else if (data === 'already vote!') {
-              swal({
-                title: '您已經投過了',
-                text: '謝謝你不過你已經投完票了',
-                type: 'warning'
-              })
-            } else {
-              swal({
-                title: '謝謝你的支持',
-                text: '你成功投下你寶貴的一票了!',
-                type: 'success'
-              })
-            }
-          })
-        }, (error) => {
-          this.ModalError()
-          console.log('err', error)
-        })
-        .catch(error => {
-          this.ModalError()
-          console.log('err', error)
-        })
-      } else if (result.dismiss === 'cancel') {
-      }
+      confirmButtonText: '明年見'
     })
   }
   render () {
